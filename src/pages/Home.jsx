@@ -29,7 +29,7 @@ const Home = () => {
 			});
 	}, [timeWindow]);
 
-	// console.log("data", data);
+	console.log("data", data);
 
 	return (
 		<Container maxW={"container.xl"}>
@@ -78,7 +78,11 @@ const Home = () => {
 						loading ? (
 							<Skeleton height={350} key={index} />
 						) : (
-							<CardComponent key={item?.id} item={item} />
+							<CardComponent
+								key={item?.id}
+								item={item}
+								type={item?.media_type}
+							/>
 						)
 					)}
 			</Grid>

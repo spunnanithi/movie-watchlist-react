@@ -15,3 +15,12 @@ export const fetchAllTrending = async (timeWindow = "day") => {
 
 	return data?.results;
 };
+
+// MOVIES & TV SHOWS - Details
+export const fetchMovieAndShowsDetails = async (mediaType, id) => {
+	const res = await axios.get(
+		`${baseUrl}/${mediaType}/${id}?api_key=${apiKey}`
+	);
+
+	return res?.data;
+};

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
+	fetchMovieAndShowsCredits,
 	fetchMovieAndShowsDetails,
 	imagePath,
 	imagePathOriginal,
@@ -25,30 +26,66 @@ const Details = () => {
 	const { type, id } = useParams();
 
 	const [details, setDetails] = useState({});
+	const [cast, setCast] = useState([]);
 	const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-		setLoading(true);
-		fetchMovieAndShowsDetails(type, id)
-			.then((res) => {
-				setDetails(res);
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, [id, type]);
+	// useEffect(() => {
+	// 	setLoading(true);
+	// 	fetchMovieAndShowsDetails(type, id)
+	// 		.then((res) => {
+	// 			setDetails(res);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		})
+	// 		.finally(() => {
+	// 			setLoading(false);
+	// 		});
 
-	console.log(details);
+	// 	fetchMovieAndShowsCredits(type, id)
+	// 		.then((res) => {
+	// 			setCredits(res);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		})
+	// 		.finally(() => {
+	// 			setLoading(false);
+	// 		});
+	// }, [id, type]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const [detailsData, creditsData] = await Promise.all([
+					fetchMovieAndShowsDetails(type, id),
+					fetchMovieAndShowsCredits(type, id),
+				]);
+
+				// Set Details data
+				setDetails(detailsData);
+
+				// Set Cast data
+				setCast(creditsData?.cast);
+			} catch (err) {
+				console.log(err);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchData();
+	}, [type, id]);
+
+	// console.log(details);
+	// console.log(cast);
 
 	const title = details?.name || details?.title;
 	const releaseDate = details?.first_air_date || details?.release_date;
 
 	if (loading) {
 		return (
-			<Flex justify={"center"}>
+			<Flex justifyContent={"center"} alignContent={"center"}>
 				<Spinner size={"xl"} color="red" />
 			</Flex>
 		);
@@ -74,12 +111,15 @@ const Details = () => {
 						alignItems={"center"}
 						gap={10}
 						flexDirection={{ base: "column", md: "row" }}>
+						{/* Movie Poster Image */}
 						<Image
 							height={"450px"}
 							borderRadius={"sm"}
 							src={`${imagePath}${details?.poster_path}`}
 						/>
+
 						<Box>
+							{/* Title & Year */}
 							<Heading fontSize={"3xl"}>
 								{title}{" "}
 								<Text as={"span"} fontWeight={"normal"} color={"gray.400"}>
@@ -87,6 +127,7 @@ const Details = () => {
 								</Text>
 							</Heading>
 
+							{/* Calender & Date */}
 							<Flex alignItems={"center"} gap={4} mt={1} mb={5}>
 								<Flex alignItems={"center"}>
 									<CalendarIcon mr={2} color={"gray.400"} />
@@ -96,6 +137,7 @@ const Details = () => {
 								</Flex>
 							</Flex>
 
+							{/* Rating Circle & Add To Watchlist Button */}
 							<Flex alignItems={"center"} gap={4}>
 								<CircularProgress
 									value={ratingToPercentage(details?.vote_average)}
@@ -132,6 +174,7 @@ const Details = () => {
 								</Button>
 							</Flex>
 
+							{/* Tagline */}
 							<Text
 								color={"gray.400"}
 								fontSize={"medium"}
@@ -140,6 +183,7 @@ const Details = () => {
 								{details?.tagline}
 							</Text>
 
+							{/* Overview & Genre Badges */}
 							<Heading fontSize={"xl"} mb={3}>
 								Overview
 							</Heading>
@@ -148,8 +192,8 @@ const Details = () => {
 							</Text>
 							<Flex mt={6} gap={2}>
 								{details?.genres?.map((genre) => (
-									<Badge p={1} key={genre.id}>
-										{genre.name}
+									<Badge p={1} key={genre?.id}>
+										{genre?.name}
 									</Badge>
 								))}
 							</Flex>
@@ -157,6 +201,26 @@ const Details = () => {
 					</Flex>
 				</Container>
 			</Box>
+
+			{/* Cast */}
+			<Container maxW={"container.xl"} pb={10}>
+				<Heading
+					as={"h2"}
+					fontSize={"medium"}
+					textTransform={"uppercase"}
+					mt={10}>
+					Cast
+				</Heading>
+				<Flex mt={5} mb={10} overflowX={"scroll"} gap={5}>
+					{cast?.length === 0 && <Text>No cast found</Text>}
+					{cast &&
+						cast.map((item) => (
+							<Box key={item?.id} minW={"150px"}>
+								<Image src={`${imagePath}${item?.profile_path}`} />
+							</Box>
+						))}
+				</Flex>
+			</Container>
 		</Box>
 	);
 };

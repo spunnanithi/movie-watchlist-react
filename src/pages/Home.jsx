@@ -29,7 +29,7 @@ const Home = () => {
 			});
 	}, [timeWindow]);
 
-	console.log("data", data);
+	// console.log("data", data);
 
 	return (
 		<Container maxW={"container.xl"}>

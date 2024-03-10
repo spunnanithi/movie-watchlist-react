@@ -24,3 +24,12 @@ export const fetchMovieAndShowsDetails = async (mediaType, id) => {
 
 	return res?.data;
 };
+
+// MOVIES & TV SHOWS - Credits
+export const fetchMovieAndShowsCredits = async (mediaType, id) => {
+	const res = await axios.get(
+		`${baseUrl}/${mediaType}/${id}/credits?api_key=${apiKey}`
+	);
+
+	return res?.data;
+};

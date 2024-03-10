@@ -13,7 +13,7 @@ const Navbar = () => {
 							color={"red"}
 							letterSpacing={"widest"}
 							fontFamily={"mono"}>
-							NETFLEX
+							WATCHQUEUE
 						</Box>
 					</Link>
 

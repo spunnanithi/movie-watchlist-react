@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Box, Container, Flex, Grid, Heading } from "@chakra-ui/react";
+import {
+	Box,
+	Container,
+	Flex,
+	Grid,
+	Heading,
+	Skeleton,
+} from "@chakra-ui/react";
 import { fetchAllTrending } from "../services/api";
 import CardComponent from "../components/CardComponent";
 
@@ -57,8 +64,6 @@ const Home = () => {
 				</Flex>
 			</Flex>
 
-			{loading && <div>Loading...</div>}
-
 			<Grid
 				templateColumns={{
 					base: "1fr",
@@ -69,7 +74,13 @@ const Home = () => {
 				}}
 				gap={4}>
 				{data &&
-					data.map((item) => <CardComponent key={item?.id} item={item} />)}
+					data.map((item, index) =>
+						loading ? (
+							<Skeleton height={350} key={index} />
+						) : (
+							<CardComponent key={item?.id} item={item} />
+						)
+					)}
 			</Grid>
 		</Container>
 	);

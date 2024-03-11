@@ -17,11 +17,19 @@ const CardComponent = ({ item, type }) => {
 						opacity: 1,
 					},
 				}}>
-				<Image
-					src={`${imagePath}${item?.poster_path}`}
-					alt={item?.title || item?.name}
-					height={"100%"}
-				/>
+				{item?.poster_path ? (
+					<Image
+						src={`${imagePath}${item?.poster_path}`}
+						alt={item?.title || item?.name}
+						height={"100%"}
+					/>
+				) : (
+					<Image
+						src={`https://i0.wp.com/capri.org.au/wp-content/uploads/2017/10/poster-placeholder.jpg?ssl=1`}
+						alt={item?.title || item?.name}
+						height={"100%"}
+					/>
+				)}
 
 				{/* Overlay appears upon hover */}
 				<Box

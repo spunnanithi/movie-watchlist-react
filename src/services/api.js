@@ -42,3 +42,12 @@ export const fetchMovieAndShowsVideos = async (mediaType, id) => {
 
 	return res?.data;
 };
+
+// MOVIES - Discover
+export const fetchMoviesDiscover = async (page, sortBy) => {
+	const res = await axios.get(
+		`${baseUrl}/discover/movie?api_key=${apiKey}&page=${page}&sort_by=${sortBy}`
+	);
+
+	return res?.data;
+};

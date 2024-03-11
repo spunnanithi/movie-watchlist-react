@@ -17,21 +17,18 @@ const CardComponent = ({ item, type }) => {
 						opacity: 1,
 					},
 				}}>
-				{item?.poster_path ? (
-					<Image
-						src={`${imagePath}${item?.poster_path}`}
-						alt={item?.title || item?.name}
-						height={"100%"}
-						borderRadius={"md"}
-					/>
-				) : (
-					<Image
-						src={`https://i0.wp.com/capri.org.au/wp-content/uploads/2017/10/poster-placeholder.jpg?ssl=1`}
-						alt={item?.title || item?.name}
-						height={"100%"}
-						borderRadius={"md"}
-					/>
-				)}
+				<Image
+					src={`${imagePath}${item?.poster_path}`}
+					// Replace with placeholder image if src cannot be found
+					onError={(e) => {
+						e.currentTarget.src =
+							"https://i0.wp.com/capri.org.au/wp-content/uploads/2017/10/poster-placeholder.jpg?ssl=1";
+						e.currentTarget.onerror = null;
+					}}
+					alt={item?.title || item?.name}
+					height={"100%"}
+					borderRadius={"md"}
+				/>
 
 				{/* Overlay appears upon hover */}
 				<Box

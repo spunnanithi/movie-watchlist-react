@@ -89,9 +89,9 @@ const Details = () => {
 				);
 				setVideo(video);
 
-				const videos = videosData?.results?.filter(
-					(video) => video?.type !== "Trailer"
-				);
+				const videos = videosData?.results
+					?.filter((video) => video?.type !== "Trailer")
+					.slice(0, 10);
 				setVideos(videos);
 			} catch (err) {
 				console.log(err);
@@ -281,24 +281,20 @@ const Details = () => {
 					{cast?.length === 0 && <Text>No cast found</Text>}
 					{cast &&
 						cast.map((item) => (
-							<Box key={item?.id} minW={"150px"}>
-								{item?.profile_path ? (
-									<Image
-										src={`${imagePath}${item?.profile_path}`}
-										w={"100%"}
-										h={"225px"}
-										objectFit={"cover"}
-										borderRadius={"md"}
-									/>
-								) : (
-									<Image
-										src={`https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg`}
-										w={"100%"}
-										h={"225px"}
-										objectFit={"cover"}
-										borderRadius={"md"}
-									/>
-								)}
+							<Box key={item?.id} maxW={"150px"} minW={"150px"}>
+								<Image
+									src={`${imagePath}${item?.profile_path}`}
+									// Replace with placeholder image if src cannot be found
+									onError={(e) => {
+										e.currentTarget.src =
+											"https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg";
+										e.currentTarget.onerror = null;
+									}}
+									w={"100%"}
+									h={"225px"}
+									objectFit={"cover"}
+									borderRadius={"md"}
+								/>
 								<Text>{item?.name}</Text>
 								<Text fontSize={"small"} color={"gray.400"}>
 									{item?.character}

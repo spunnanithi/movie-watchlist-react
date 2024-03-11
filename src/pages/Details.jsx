@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import {
 	fetchMovieAndShowsCredits,
 	fetchMovieAndShowsDetails,
+	fetchMovieAndShowsVideos,
 	imagePath,
 	imagePathOriginal,
 } from "../services/api";
@@ -19,15 +20,27 @@ import {
 	Spinner,
 	Text,
 } from "@chakra-ui/react";
-import { CalendarIcon, CheckCircleIcon, SmallAddIcon } from "@chakra-ui/icons";
-import { ratingToPercentage, resolveRatingColor } from "../utils/helpers";
+import {
+	CalendarIcon,
+	CheckCircleIcon,
+	SmallAddIcon,
+	TimeIcon,
+} from "@chakra-ui/icons";
+import {
+	convertMinutesToHours,
+	ratingToPercentage,
+	resolveRatingColor,
+} from "../utils/helpers";
+import VideoComponent from "../components/VideoComponent";
 
 const Details = () => {
 	const { type, id } = useParams();
+	const [loading, setLoading] = useState(true);
 
 	const [details, setDetails] = useState({});
 	const [cast, setCast] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const [video, setVideo] = useState(null);
+	const [videos, setVideos] = useState([]);
 
 	// useEffect(() => {
 	// 	setLoading(true);
@@ -57,9 +70,10 @@ const Details = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const [detailsData, creditsData] = await Promise.all([
+				const [detailsData, creditsData, videosData] = await Promise.all([
 					fetchMovieAndShowsDetails(type, id),
 					fetchMovieAndShowsCredits(type, id),
+					fetchMovieAndShowsVideos(type, id),
 				]);
 
 				// Set Details data
@@ -67,6 +81,17 @@ const Details = () => {
 
 				// Set Cast data
 				setCast(creditsData?.cast);
+
+				// Set Video & Videos data
+				const video = videosData?.results?.find(
+					(video) => video?.type === "Trailer"
+				);
+				setVideo(video);
+
+				const videos = videosData?.results?.filter(
+					(video) => video?.type !== "Trailer"
+				);
+				setVideos(videos);
 			} catch (err) {
 				console.log(err);
 			} finally {
@@ -79,6 +104,8 @@ const Details = () => {
 
 	// console.log(details);
 	// console.log(cast);
+	// console.log("video", video);
+	// console.log("videos", videos);
 
 	const title = details?.name || details?.title;
 	const releaseDate = details?.first_air_date || details?.release_date;
@@ -135,6 +162,19 @@ const Details = () => {
 										{new Date(releaseDate).toLocaleDateString("en-US")} (US)
 									</Text>
 								</Flex>
+
+								{type === "movie" && (
+									<>
+										<Box>*</Box>
+										<Flex alignItems={"center"}>
+											<TimeIcon mr={2} color={"gray.400"} />
+											<Text fontSize={"small"}>
+												{convertMinutesToHours(details?.runtime)} (
+												{details?.runtime} mins)
+											</Text>
+										</Flex>
+									</>
+								)}
 							</Flex>
 
 							{/* Rating Circle & Add To Watchlist Button */}
@@ -219,6 +259,27 @@ const Details = () => {
 								<Image src={`${imagePath}${item?.profile_path}`} />
 							</Box>
 						))}
+				</Flex>
+
+				{/* Videos */}
+				<Heading
+					as={"h2"}
+					fontSize={"medium"}
+					textTransform={"uppercase"}
+					mt={10}
+					mb={5}>
+					Videos
+				</Heading>
+				<VideoComponent id={video?.key} title={title} />
+				<Flex mt={5} mb={10} overflowX={"scroll"} gap={5}>
+					{videos?.map((video) => (
+						<Box key={video?.id}>
+							<VideoComponent id={video?.key} small />
+							<Text fontSize={"small"} fontWeight={"bold"} mt={2} noOfLines={2}>
+								{video?.name}
+							</Text>
+						</Box>
+					))}
 				</Flex>
 			</Container>
 		</Box>

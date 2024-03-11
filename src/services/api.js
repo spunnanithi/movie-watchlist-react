@@ -33,3 +33,12 @@ export const fetchMovieAndShowsCredits = async (mediaType, id) => {
 
 	return res?.data;
 };
+
+// MOVIES & TV SHOWS - Videos
+export const fetchMovieAndShowsVideos = async (mediaType, id) => {
+	const res = await axios.get(
+		`${baseUrl}/${mediaType}/${id}/videos?api_key=${apiKey}`
+	);
+
+	return res?.data;
+};

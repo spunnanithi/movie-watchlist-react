@@ -35,7 +35,13 @@ const Movies = () => {
 	// console.log(movies);
 
 	return (
-		<Container maxW={"container.xl"}>
+		<Container
+			maxW={{
+				base: "container.sm",
+				sm: "container.md",
+				lg: "container.lg",
+				xl: "container.xl",
+			}}>
 			<Flex alignItems={"baseline"} gap={4} my={10}>
 				<Heading as={"h2"} fontSize={"md"} textTransform={"uppercase"}>
 					Discover Movies

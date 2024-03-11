@@ -35,15 +35,20 @@ const CardComponent = ({ item, type }) => {
 					bg={"rgba(0,0,0,0.9)"}
 					opacity={0}
 					transition={"opacity 0.3s ease-in-out"}>
-					<Text textAlign={"center"}>{item?.title || item?.name}</Text>
+					<Text fontSize={"large"} textAlign={"center"}>
+						{item?.title || item?.name}
+					</Text>
+					<Text textAlign={"center"} fontSize={"small"} color={"gray.400"}>
+						{item?.media_type === "movie" ? "Movie" : "TV Show"}
+					</Text>
 					<Text textAlign={"center"} fontSize={"x-small"} color={"green.200"}>
 						{new Date(
 							item?.release_date || item?.first_air_date
 						).getFullYear() || "No Date Found"}
 					</Text>
-					<Flex justifyContent={"center"} alignItems={"center"} gap={2} mt={4}>
-						<StarIcon fontSize={"small"} />
-						<Text>{item?.vote_average?.toFixed(1)}</Text>
+					<Flex justifyContent={"center"} alignItems={"center"} gap={1} mt={4}>
+						<StarIcon fontSize={"medium"} />
+						<Text fontSize={"medium"}>{item?.vote_average?.toFixed(1)}</Text>
 					</Flex>
 				</Box>
 			</Box>

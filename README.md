@@ -2,6 +2,12 @@
 
 Movie watchlist application built with React, etc.
 
+- [ ] Infinite scrolling for cast
+- [ ] Infinite scrolling for small videos
+- [ ] Optimize YouTube embed videos
+- [ ] Make cast details page
+- [ ] Make categories page to filter by categories
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

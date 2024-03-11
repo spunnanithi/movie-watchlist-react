@@ -19,6 +19,7 @@ import {
 	Image,
 	Spinner,
 	Text,
+	Icon,
 } from "@chakra-ui/react";
 import {
 	CalendarIcon,
@@ -163,14 +164,39 @@ const Details = () => {
 									</Text>
 								</Flex>
 
+								{/* Movie Runtime */}
 								{type === "movie" && (
 									<>
-										<Box>*</Box>
+										<Box>|</Box>
 										<Flex alignItems={"center"}>
 											<TimeIcon mr={2} color={"gray.400"} />
 											<Text fontSize={"small"}>
 												{convertMinutesToHours(details?.runtime)} (
 												{details?.runtime} mins)
+											</Text>
+										</Flex>
+									</>
+								)}
+
+								{/* TV Show Seasons and Episodes */}
+								{type === "tv" && (
+									<>
+										<Box>|</Box>
+										<Flex alignItems={"center"}>
+											<TimeIcon mr={2} color={"gray.400"} />
+											<Text fontSize={"small"}>
+												{details?.number_of_seasons}{" "}
+												{details?.number_of_seasons > 1 ? "seasons" : "season"}{" "}
+												<Icon viewBox="0 0 200 200" color="gray.400">
+													<path
+														fill="currentColor"
+														d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
+													/>
+												</Icon>{" "}
+												{details?.number_of_episodes}{" "}
+												{details?.number_of_episodes > 1
+													? "episodes"
+													: "episode"}
 											</Text>
 										</Flex>
 									</>
@@ -256,7 +282,18 @@ const Details = () => {
 					{cast &&
 						cast.map((item) => (
 							<Box key={item?.id} minW={"150px"}>
-								<Image src={`${imagePath}${item?.profile_path}`} />
+								{item?.profile_path ? (
+									<Image src={`${imagePath}${item?.profile_path}`} />
+								) : (
+									<Image
+										height={"225px"}
+										src={`https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg`}
+									/>
+								)}
+								<Text>{item?.name}</Text>
+								<Text fontSize={"small"} color={"gray.400"}>
+									{item?.character}
+								</Text>
 							</Box>
 						))}
 				</Flex>

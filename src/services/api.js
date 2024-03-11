@@ -51,3 +51,12 @@ export const fetchMoviesDiscover = async (page, sortBy) => {
 
 	return res?.data;
 };
+
+// TV SHOWS - Discover
+export const fetchShowsDiscover = async (page, sortBy) => {
+	const res = await axios.get(
+		`${baseUrl}/discover/tv?api_key=${apiKey}&page=${page}&sort_by=${sortBy}`
+	);
+
+	return res?.data;
+};

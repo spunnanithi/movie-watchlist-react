@@ -142,7 +142,7 @@ const Details = () => {
 						{/* Movie Poster Image */}
 						<Image
 							height={"450px"}
-							borderRadius={"sm"}
+							borderRadius={"md"}
 							src={`${imagePath}${details?.poster_path}`}
 						/>
 
@@ -283,11 +283,20 @@ const Details = () => {
 						cast.map((item) => (
 							<Box key={item?.id} minW={"150px"}>
 								{item?.profile_path ? (
-									<Image src={`${imagePath}${item?.profile_path}`} />
+									<Image
+										src={`${imagePath}${item?.profile_path}`}
+										w={"100%"}
+										h={"225px"}
+										objectFit={"cover"}
+										borderRadius={"md"}
+									/>
 								) : (
 									<Image
-										height={"225px"}
 										src={`https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg`}
+										w={"100%"}
+										h={"225px"}
+										objectFit={"cover"}
+										borderRadius={"md"}
 									/>
 								)}
 								<Text>{item?.name}</Text>

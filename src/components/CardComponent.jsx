@@ -22,12 +22,14 @@ const CardComponent = ({ item, type }) => {
 						src={`${imagePath}${item?.poster_path}`}
 						alt={item?.title || item?.name}
 						height={"100%"}
+						borderRadius={"md"}
 					/>
 				) : (
 					<Image
 						src={`https://i0.wp.com/capri.org.au/wp-content/uploads/2017/10/poster-placeholder.jpg?ssl=1`}
 						alt={item?.title || item?.name}
 						height={"100%"}
+						borderRadius={"md"}
 					/>
 				)}
 

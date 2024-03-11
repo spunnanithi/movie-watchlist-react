@@ -32,7 +32,7 @@ const Movies = () => {
 			.finally(() => setLoading(false));
 	}, [activePage, sortBy]);
 
-	console.log(movies);
+	// console.log(movies);
 
 	return (
 		<Container maxW={"container.xl"}>

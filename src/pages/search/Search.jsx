@@ -70,6 +70,7 @@ const Search = () => {
 						<SearchIcon />
 					</InputLeftElement>
 					<Input
+						autoFocus={true}
 						type="text"
 						onChange={(e) => setTempSearchValue(e.target.value)}
 						value={tempSearchValue}
@@ -105,7 +106,7 @@ const Search = () => {
 					lg: "repeat(4, 1fr)",
 					xl: "repeat(5, 1fr)",
 				}}
-				gap={4}>
+				gap={5}>
 				{data?.length > 0 &&
 					!loading &&
 					data.map((item, index) =>

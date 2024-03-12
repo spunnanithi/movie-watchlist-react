@@ -269,7 +269,14 @@ const Details = () => {
 			</Box>
 
 			{/* Cast */}
-			<Container maxW={"container.xl"} pb={10}>
+			<Container
+				maxW={{
+					base: "container.sm",
+					sm: "container.md",
+					lg: "container.lg",
+					xl: "container.xl",
+				}}
+				pb={10}>
 				<Heading
 					as={"h2"}
 					fontSize={"medium"}

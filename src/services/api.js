@@ -60,3 +60,12 @@ export const fetchShowsDiscover = async (page, sortBy) => {
 
 	return res?.data;
 };
+
+// SEARCH
+export const fetchSearchData = async (query, page) => {
+	const res = await axios.get(
+		`${baseUrl}/search/multi?api_key=${apiKey}&page=${page}&query=${query}`
+	);
+
+	return res?.data;
+};

@@ -12,32 +12,40 @@ import {
 	Grid,
 	Skeleton,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchSearchData } from "../../services/api";
 import CardComponent from "../../components/CardComponent";
+import PaginationComponent from "../../components/PaginationComponent";
 
 const Search = () => {
 	const [searchValue, setSearchValue] = useState("");
+	const [tempSearchValue, setTempSearchValue] = useState("");
 	const [activePage, setActivePage] = useState(1);
+	const [totalPages, setTotalPages] = useState(1);
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [isFetched, setIsFetched] = useState(false);
 
-	const handleSearch = (e) => {
-		e.preventDefault();
-
+	useEffect(() => {
 		setLoading(true);
 
 		fetchSearchData(searchValue, activePage)
 			.then((res) => {
 				setData(res?.results);
 				setActivePage(res?.page);
+				setTotalPages(res?.total_pages);
 			})
 			.catch((err) => console.log(err))
 			.finally(() => {
 				setLoading(false);
-				setIsFetched(true);
 			});
+	}, [activePage, searchValue]);
+
+	const handleSearch = (e) => {
+		e.preventDefault();
+
+		setSearchValue(tempSearchValue);
+		setIsFetched(true);
 	};
 
 	// console.log(data);
@@ -63,14 +71,14 @@ const Search = () => {
 					</InputLeftElement>
 					<Input
 						type="text"
-						onChange={(e) => setSearchValue(e.target.value)}
-						value={searchValue}
+						onChange={(e) => setTempSearchValue(e.target.value)}
+						value={tempSearchValue}
 						placeholder="Search Movies, TV Shows, Actors..."
 					/>
 
-					{searchValue && (
+					{tempSearchValue && (
 						<InputRightElement>
-							<CloseButton onClick={() => setSearchValue("")} />
+							<CloseButton onClick={() => setTempSearchValue("")} />
 						</InputRightElement>
 					)}
 				</InputGroup>
@@ -112,6 +120,13 @@ const Search = () => {
 						)
 					)}
 			</Grid>
+
+			{data?.length !== 0 && isFetched && (
+				<PaginationComponent
+					activePage={activePage}
+					setActivePage={setActivePage}
+					totalPages={totalPages}></PaginationComponent>
+			)}
 		</Container>
 	);
 };

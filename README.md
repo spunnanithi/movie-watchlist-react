@@ -7,6 +7,7 @@ Movie watchlist application built with React, etc.
 - [ ] Optimize YouTube embed videos
 - [ ] Make cast details page
 - [ ] Make categories page to filter by categories
+- [ ] Implement Firebase user sign in with email and password
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

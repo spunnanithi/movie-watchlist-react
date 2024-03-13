@@ -66,7 +66,7 @@ const Navbar = () => {
 								</MenuButton>
 								<MenuList borderColor={"gray.600"} bg={"gray.700"}>
 									<MenuGroup title="Profile">
-										<Link to="/">
+										<Link to="/watchlist">
 											<MenuItem
 												icon={<Icon as={MdListAlt} fontSize={20} />}
 												_hover={{ bg: "gray.500" }}

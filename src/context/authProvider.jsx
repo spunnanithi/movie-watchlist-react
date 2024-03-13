@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 	// Function to allow user to sign in with Google
 	const signInWithGoogle = () => {
 		const provider = new GoogleAuthProvider();
-		return signInWithPopup(provider);
+		return signInWithPopup(auth, provider);
 	};
 
 	// Function to allow user to log out
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 	}, []);
 
 	return (
-		<AuthContext.Provider value={(user, loading, signInWithGoogle, logout)}>
+		<AuthContext.Provider value={{ user, loading, signInWithGoogle, logout }}>
 			{children}
 		</AuthContext.Provider>
 	);

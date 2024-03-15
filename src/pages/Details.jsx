@@ -40,9 +40,10 @@ import { useFirestore } from "../services/firestore";
 const Details = () => {
 	const { type, id } = useParams();
 	const [loading, setLoading] = useState(true);
+	const [isInWatchlist, setIsInWatchlist] = useState(false);
 
 	const { user } = useAuth();
-	const { addToWatchlist } = useFirestore();
+	const { addToWatchlist, checkIfInWatchlist } = useFirestore();
 	const toast = useToast();
 
 	const [details, setDetails] = useState({});
@@ -129,8 +130,13 @@ const Details = () => {
 			overview: details?.overview,
 		};
 
+		// Add item for user to db
 		const dataId = data?.id?.toString();
 		await addToWatchlist(user?.uid, dataId, data);
+
+		// Check if item is already in db
+		const isSetToWatchlist = await checkIfInWatchlist(user?.uid, dataId);
+		setIsInWatchlist(isSetToWatchlist);
 	};
 
 	// console.log(details);
@@ -138,8 +144,17 @@ const Details = () => {
 	// console.log("video", video);
 	// console.log("videos", videos);
 
-	const title = details?.name || details?.title;
-	const releaseDate = details?.first_air_date || details?.release_date;
+	// Upon mount, check to see if current item is already in db
+	useEffect(() => {
+		if (!user) {
+			setIsInWatchlist(false);
+			return;
+		}
+
+		checkIfInWatchlist(user?.uid, id).then((data) => {
+			setIsInWatchlist(data);
+		});
+	}, [user, id, checkIfInWatchlist]);
 
 	if (loading) {
 		return (
@@ -148,6 +163,9 @@ const Details = () => {
 			</Flex>
 		);
 	}
+
+	const title = details?.name || details?.title;
+	const releaseDate = details?.first_air_date || details?.release_date;
 
 	return (
 		<Box>
@@ -253,21 +271,23 @@ const Details = () => {
 								<Text display={{ base: "none", md: "initial" }}>
 									User Score
 								</Text>
-								<Button
-									display={"none"}
-									colorScheme="green"
-									variant={"outline"}
-									onClick={() => console.log("click")}
-									leftIcon={<CheckCircleIcon />}>
-									In Watchlist
-								</Button>
-								<Button
-									colorScheme="whiteAlpha"
-									variant={"outline"}
-									onClick={() => handleSaveToWatchlist()}
-									leftIcon={<SmallAddIcon color={"whiteAlpha.900"} />}>
-									<Text color={"whiteAlpha.900"}>Add To Watchlist</Text>
-								</Button>
+								{isInWatchlist ? (
+									<Button
+										colorScheme="green"
+										variant={"outline"}
+										onClick={() => console.log("click")}
+										leftIcon={<CheckCircleIcon />}>
+										In Watchlist
+									</Button>
+								) : (
+									<Button
+										colorScheme="whiteAlpha"
+										variant={"outline"}
+										onClick={() => handleSaveToWatchlist()}
+										leftIcon={<SmallAddIcon color={"whiteAlpha.900"} />}>
+										<Text color={"whiteAlpha.900"}>Add To Watchlist</Text>
+									</Button>
+								)}
 							</Flex>
 
 							{/* Tagline */}

@@ -46,29 +46,31 @@ export const useFirestore = () => {
 		}
 	};
 
+	// Function to check if item is already in db
+	const checkIfInWatchlist = async (userId, dataId) => {
+		// Reference document from db
+		const docRef = doc(
+			db,
+			"users",
+			userId?.toString(),
+			"watchlist",
+			dataId?.toString()
+		);
+
+		// Obtain document snapshot from db
+		const docSnap = await getDoc(docRef);
+
+		// Check to see if document already exists in the db
+		if (docSnap.exists()) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
 	return {
 		addDocument,
 		addToWatchlist,
+		checkIfInWatchlist,
 	};
-};
-
-const checkIfInWatchlist = async (userId, dataId) => {
-	// Reference document from db
-	const docRef = doc(
-		db,
-		"users",
-		userId?.toString(),
-		"watchlist",
-		dataId?.toString()
-	);
-
-	// Obtain document snapshot from db
-	const docSnap = await getDoc(docRef);
-
-	// Check to see if document already exists in the db
-	if (docSnap.exists()) {
-		return true;
-	} else {
-		return false;
-	}
 };

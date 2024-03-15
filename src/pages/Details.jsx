@@ -282,15 +282,6 @@ const Details = () => {
 								)}
 							</Flex>
 
-							{/* Tagline */}
-							{/* <Text
-								color={"gray.400"}
-								fontSize={"medium"}
-								fontStyle={"italic"}
-								my={5}>
-								{details?.tagline}
-							</Text> */}
-
 							{/* Overview & Genre Badges */}
 							<Heading fontSize={"xl"} mb={3}>
 								Overview
@@ -300,7 +291,7 @@ const Details = () => {
 							</Text>
 							<Flex mt={6} gap={2}>
 								{details?.genres?.map((genre) => (
-									<Badge p={1} key={genre?.id}>
+									<Badge colorScheme={"whiteAlpha"} p={1} key={genre?.id}>
 										{genre?.name}
 									</Badge>
 								))}

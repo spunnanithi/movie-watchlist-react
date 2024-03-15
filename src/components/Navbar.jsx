@@ -10,8 +10,10 @@ import {
 	DrawerHeader,
 	DrawerOverlay,
 	Flex,
+	Text,
 	Icon,
 	IconButton,
+	Image,
 	Menu,
 	MenuButton,
 	MenuDivider,
@@ -21,10 +23,11 @@ import {
 	useDisclosure,
 	useToast,
 } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
-import { Link } from "@chakra-ui/react";
-import { useAuth } from "../context/useAuth";
 import { HamburgerIcon, Search2Icon, SearchIcon } from "@chakra-ui/icons";
+import { Link } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
+import tvIcon from "../assets/tv-icon.svg";
 import { FcGoogle } from "react-icons/fc";
 import { MdListAlt } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
@@ -80,14 +83,21 @@ const Navbar = () => {
 						}}
 						as={NavLink}
 						to="/">
-						<Box
+						<Flex
+							gap={3}
 							fontSize={"3xl"}
 							fontWeight={"bold"}
 							color={"teal.500"}
 							letterSpacing={"widest"}
 							fontFamily={"Tahoma"}>
-							FLIXQUEUE
-						</Box>
+							<Image
+								objectFit={"cover"}
+								boxSize={"40px"}
+								src={tvIcon}
+								alt="FlixQueue logo"
+							/>
+							<Text>FLIXQUEUE</Text>
+						</Flex>
 					</Link>
 
 					{/* DESKTOP */}

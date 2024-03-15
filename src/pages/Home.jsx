@@ -47,14 +47,14 @@ const Home = () => {
 				<Flex
 					alignItems={"center"}
 					gap={2}
-					border={"1px solid teal"}
+					border={"2px solid teal"}
 					borderRadius={"20px"}>
 					<Box
 						as="button"
 						px={3}
 						py={1}
 						borderRadius={"20px"}
-						bg={`${timeWindow === "day" ? "gray.700" : ""}`}
+						bg={`${timeWindow === "day" ? "gray.600" : ""}`}
 						onClick={() => setTimeWindow("day")}>
 						Today
 					</Box>
@@ -63,7 +63,7 @@ const Home = () => {
 						px={3}
 						py={1}
 						borderRadius={"20px"}
-						bg={`${timeWindow === "week" ? "gray.700" : ""}`}
+						bg={`${timeWindow === "week" ? "gray.600" : ""}`}
 						onClick={() => setTimeWindow("week")}>
 						This Week
 					</Box>

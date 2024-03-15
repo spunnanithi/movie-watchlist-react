@@ -21,7 +21,8 @@ import {
 	useDisclosure,
 	useToast,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { Link } from "@chakra-ui/react";
 import { useAuth } from "../context/useAuth";
 import { HamburgerIcon, Search2Icon, SearchIcon } from "@chakra-ui/icons";
 import { FcGoogle } from "react-icons/fc";
@@ -65,13 +66,24 @@ const Navbar = () => {
 			top={0}
 			py={4}
 			mb={2}>
-			<Container maxW={"container.xl"}>
+			<Container
+				maxW={{
+					base: "container.sm",
+					sm: "container.md",
+					lg: "container.lg",
+					xl: "container.xl",
+				}}>
 				<Flex justifyContent={"space-between"}>
-					<Link to="/">
+					<Link
+						_hover={{
+							textDecoration: "none",
+						}}
+						as={NavLink}
+						to="/">
 						<Box
-							fontSize={"2xl"}
+							fontSize={"3xl"}
 							fontWeight={"bold"}
-							color={"red"}
+							color={"teal.500"}
 							letterSpacing={"widest"}
 							fontFamily={"Tahoma"}>
 							FLIXQUEUE
@@ -80,13 +92,56 @@ const Navbar = () => {
 
 					{/* DESKTOP */}
 					<Flex
-						gap={"4"}
+						gap={5}
 						alignItems={"center"}
 						display={{ base: "none", md: "flex" }}>
-						<Link to="/">Home</Link>
-						<Link to="/movies">Movies</Link>
-						<Link to="/shows">TV Shows</Link>
-						<Link to="/search">
+						<Link
+							as={NavLink}
+							_hover={{
+								textDecoration: "none",
+							}}
+							_activeLink={{
+								borderBottom: "2px",
+								textColor: "teal.500",
+								fontWeight: "bold",
+							}}
+							to="/">
+							Home
+						</Link>
+						<Link
+							as={NavLink}
+							_hover={{
+								textDecoration: "none",
+							}}
+							_activeLink={{
+								borderBottom: "2px",
+								textColor: "teal.500",
+								fontWeight: "bold",
+							}}
+							to="/movies">
+							Movies
+						</Link>
+						<Link
+							as={NavLink}
+							_hover={{
+								textDecoration: "none",
+							}}
+							_activeLink={{
+								borderBottom: "2px",
+								textColor: "teal.500",
+								fontWeight: "bold",
+							}}
+							to="/shows">
+							TV Shows
+						</Link>
+						<Link
+							as={NavLink}
+							_activeLink={{
+								"& > svg": {
+									textColor: "teal",
+								},
+							}}
+							to="/search">
 							<Search2Icon fontSize={"lg"} />
 						</Link>
 						{user ? (
@@ -94,7 +149,7 @@ const Navbar = () => {
 								<MenuButton>
 									<Avatar
 										src={user?.photoURL}
-										bg={"red.500"}
+										bg={"teal.500"}
 										color={"white"}
 										size={"sm"}
 										name={user?.displayName}
@@ -102,7 +157,7 @@ const Navbar = () => {
 								</MenuButton>
 								<MenuList borderColor={"gray.600"} bg={"gray.700"}>
 									<MenuGroup title="Profile">
-										<Link to="/watchlist">
+										<Link as={NavLink} to="/watchlist">
 											<MenuItem
 												icon={<Icon as={MdListAlt} fontSize={20} />}
 												_hover={{ bg: "gray.500" }}
@@ -162,7 +217,14 @@ const Navbar = () => {
 						display={{ base: "flex", md: "none" }}
 						alignItems={"center"}
 						gap="4">
-						<Link to="/search">
+						<Link
+							as={NavLink}
+							_activeLink={{
+								"& > svg": {
+									textColor: "teal",
+								},
+							}}
+							to="/search">
 							<SearchIcon fontSize={"xl"} />
 						</Link>
 						<IconButton
@@ -173,7 +235,7 @@ const Navbar = () => {
 						<Drawer isOpen={isOpen} placement="right" onClose={onClose}>
 							<DrawerOverlay />
 							<DrawerContent bg={"black"}>
-								<DrawerCloseButton />
+								<DrawerCloseButton mt={1} />
 								<DrawerHeader>
 									{user ? (
 										<Flex alignItems="center" gap="2">
@@ -204,12 +266,48 @@ const Navbar = () => {
 
 								<DrawerBody>
 									<Flex flexDirection={"column"} gap={"4"} onClick={onClose}>
-										<Link to="/">Home</Link>
-										<Link to="/movies">Movies</Link>
-										<Link to="/shows">TV Shows</Link>
+										<Link
+											as={NavLink}
+											_activeLink={{
+												borderBottom: "2px",
+												textColor: "teal.500",
+												fontWeight: "bold",
+											}}
+											to="/">
+											Home
+										</Link>
+										<Link
+											as={NavLink}
+											_activeLink={{
+												borderBottom: "2px",
+												textColor: "teal.500",
+												fontWeight: "bold",
+											}}
+											to="/movies">
+											Movies
+										</Link>
+										<Link
+											as={NavLink}
+											_activeLink={{
+												borderBottom: "2px",
+												textColor: "teal.500",
+												fontWeight: "bold",
+											}}
+											to="/shows">
+											TV Shows
+										</Link>
 										{user && (
 											<>
-												<Link to="/watchlist">Watchlist</Link>
+												<Link
+													as={NavLink}
+													_activeLink={{
+														borderBottom: "2px",
+														textColor: "teal.500",
+														fontWeight: "bold",
+													}}
+													to="/watchlist">
+													Watchlist
+												</Link>
 												<Button
 													variant={"outline"}
 													colorScheme="red"

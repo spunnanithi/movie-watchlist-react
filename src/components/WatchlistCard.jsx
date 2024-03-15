@@ -57,7 +57,7 @@ const WatchlistCard = ({ type, item, setWatchlist }) => {
 					<Heading fontSize={{ base: "xl", md: "2xl" }} noOfLines={1}>
 						{item?.title || item?.name}
 					</Heading>
-					<Heading fontSize={"sm"} color={"green.200"} mt="2">
+					<Heading fontSize={"sm"} color={"teal.300"} mt="2">
 						{new Date(
 							item?.release_date || item?.first_air_date
 						).getFullYear() || "N/A"}

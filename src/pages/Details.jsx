@@ -52,31 +52,6 @@ const Details = () => {
 	const [video, setVideo] = useState(null);
 	const [videos, setVideos] = useState([]);
 
-	// useEffect(() => {
-	// 	setLoading(true);
-	// 	fetchMovieAndShowsDetails(type, id)
-	// 		.then((res) => {
-	// 			setDetails(res);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		})
-	// 		.finally(() => {
-	// 			setLoading(false);
-	// 		});
-
-	// 	fetchMovieAndShowsCredits(type, id)
-	// 		.then((res) => {
-	// 			setCredits(res);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		})
-	// 		.finally(() => {
-	// 			setLoading(false);
-	// 		});
-	// }, [id, type]);
-
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -167,7 +142,7 @@ const Details = () => {
 	if (loading) {
 		return (
 			<Flex justifyContent={"center"} alignContent={"center"}>
-				<Spinner size={"xl"} color="red" />
+				<Spinner size={"xl"} color="teal" />
 			</Flex>
 		);
 	}
@@ -206,10 +181,15 @@ const Details = () => {
 							{/* Title & Year */}
 							<Heading fontSize={"3xl"}>
 								{title}{" "}
-								<Text as={"span"} fontWeight={"normal"} color={"gray.400"}>
+								<Text as={"span"} fontWeight={"normal"} color={"teal.400"}>
 									{new Date(releaseDate).getFullYear()}
 								</Text>
 							</Heading>
+
+							{/* Tagline */}
+							<Text color={"gray.400"} fontSize={"large"} fontStyle={"italic"}>
+								{details?.tagline}
+							</Text>
 
 							{/* Calender & Date */}
 							<Flex alignItems={"center"} gap={4} mt={1} mb={5}>
@@ -260,25 +240,29 @@ const Details = () => {
 							</Flex>
 
 							{/* Rating Circle & Add To Watchlist Button */}
-							<Flex alignItems={"center"} gap={4}>
-								<CircularProgress
-									value={ratingToPercentage(details?.vote_average)}
-									bg={"gray.800"}
-									borderRadius={"full"}
-									p={0.5}
-									size={"70px"}
-									color={resolveRatingColor(details?.vote_average)}
-									thickness={"6px"}>
-									<CircularProgressLabel>
-										{ratingToPercentage(details?.vote_average)}{" "}
-										<Box as="span" fontSize={"12px"}>
-											%
-										</Box>
-									</CircularProgressLabel>
-								</CircularProgress>
-								<Text display={{ base: "none", md: "initial" }}>
-									User Score
-								</Text>
+							<Flex my={5} alignItems={"center"} gap={7}>
+								<Flex flexDirection={"column"}>
+									<Text
+										fontWeight={"bold"}
+										display={{ base: "none", md: "initial" }}>
+										User Score
+									</Text>
+									<CircularProgress
+										value={ratingToPercentage(details?.vote_average)}
+										bg={"gray.800"}
+										borderRadius={"full"}
+										p={0.5}
+										size={"80px"}
+										color={resolveRatingColor(details?.vote_average)}
+										thickness={"8px"}>
+										<CircularProgressLabel>
+											{ratingToPercentage(details?.vote_average)}{" "}
+											<Box as="span" fontSize={"12px"}>
+												%
+											</Box>
+										</CircularProgressLabel>
+									</CircularProgress>
+								</Flex>
 								{isInWatchlist ? (
 									<Button
 										colorScheme="green"
@@ -299,13 +283,13 @@ const Details = () => {
 							</Flex>
 
 							{/* Tagline */}
-							<Text
+							{/* <Text
 								color={"gray.400"}
 								fontSize={"medium"}
 								fontStyle={"italic"}
 								my={5}>
 								{details?.tagline}
-							</Text>
+							</Text> */}
 
 							{/* Overview & Genre Badges */}
 							<Heading fontSize={"xl"} mb={3}>

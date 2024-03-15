@@ -31,14 +31,18 @@ const CardComponent = ({ item, type }) => {
 				/>
 
 				{/* Overlay appears upon hover */}
-				<Box
+				<Flex
+					borderBottomRadius={"md"}
+					flexDirection="column"
+					justifyContent={"center"}
+					alignItems={"center"}
 					className="overlay"
 					position={"absolute"}
 					p={2}
 					bottom={0}
 					left={0}
 					w={"100%"}
-					h={"33%"}
+					h={"37%"}
 					bg={"rgba(0,0,0,0.9)"}
 					opacity={0}
 					transition={"opacity 0.3s ease-in-out"}>
@@ -48,7 +52,7 @@ const CardComponent = ({ item, type }) => {
 					<Text textAlign={"center"} fontSize={"small"} color={"gray.400"}>
 						{item?.media_type === "movie" ? "Movie" : "TV Show"}
 					</Text>
-					<Text textAlign={"center"} fontSize={"x-small"} color={"green.200"}>
+					<Text textAlign={"center"} fontSize={"x-small"} color={"teal.300"}>
 						{new Date(
 							item?.release_date || item?.first_air_date
 						).getFullYear() || "No Date Found"}
@@ -57,7 +61,7 @@ const CardComponent = ({ item, type }) => {
 						<StarIcon fontSize={"medium"} />
 						<Text fontSize={"medium"}>{item?.vote_average?.toFixed(1)}</Text>
 					</Flex>
-				</Box>
+				</Flex>
 			</Box>
 		</Link>
 	);

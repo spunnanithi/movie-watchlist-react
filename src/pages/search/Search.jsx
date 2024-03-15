@@ -71,6 +71,8 @@ const Search = () => {
 					</InputLeftElement>
 					<Input
 						autoFocus={true}
+						focusBorderColor="teal.500"
+						borderColor="teal"
 						type="text"
 						onChange={(e) => setTempSearchValue(e.target.value)}
 						value={tempSearchValue}

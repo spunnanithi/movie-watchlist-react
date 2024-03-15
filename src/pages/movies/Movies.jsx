@@ -48,6 +48,8 @@ const Movies = () => {
 				</Heading>
 
 				<Select
+					borderColor={"teal"}
+					focusBorderColor="teal.500"
 					w={"130px"}
 					onChange={(e) => {
 						setActivePage(1);

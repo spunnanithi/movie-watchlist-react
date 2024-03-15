@@ -38,7 +38,7 @@ const Watchlist = () => {
 
 			{loading && (
 				<Flex justify={"center"} mt={10}>
-					<Spinner size={"xl"} color="red" />
+					<Spinner size={"xl"} color="teal" />
 				</Flex>
 			)}
 

@@ -6,6 +6,17 @@ const config = {
 	useSystemColorMode: false,
 };
 
+// TODO: For Dev Env
+// const styles = {
+// 	global: (props) => ({
+// 		body: {
+// 			bg: mode("blackAlpha.900")(props),
+// 			color: mode("whiteAlpha.900")(props),
+// 		},
+// 	}),
+// };
+
+// TODO: For Production Env
 const styles = {
 	global: (props) => ({
 		body: {

@@ -1,6 +1,13 @@
 import { useToast } from "@chakra-ui/react";
 import { db } from "./firebase";
-import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	getDoc,
+	setDoc,
+} from "firebase/firestore";
 
 export const useFirestore = () => {
 	const toast = useToast();
@@ -46,6 +53,30 @@ export const useFirestore = () => {
 		}
 	};
 
+	const removeFromWatchlist = async (userId, dataId) => {
+		try {
+			await deleteDoc(
+				doc(db, "users", userId?.toString(), "watchlist", dataId?.toString())
+			);
+
+			toast({
+				title: "Success",
+				description: "Removed from watchlist",
+				status: "success",
+				isClosable: true,
+			});
+		} catch (err) {
+			console.log("Error removing watchlist from document: ", err);
+
+			toast({
+				title: "Error",
+				description: "Unable to remove movie/show from watchlist",
+				status: "error",
+				isClosable: true,
+			});
+		}
+	};
+
 	// Function to check if item is already in db
 	const checkIfInWatchlist = async (userId, dataId) => {
 		// Reference document from db
@@ -72,5 +103,6 @@ export const useFirestore = () => {
 		addDocument,
 		addToWatchlist,
 		checkIfInWatchlist,
+		removeFromWatchlist,
 	};
 };

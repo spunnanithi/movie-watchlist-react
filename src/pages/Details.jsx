@@ -43,7 +43,8 @@ const Details = () => {
 	const [isInWatchlist, setIsInWatchlist] = useState(false);
 
 	const { user } = useAuth();
-	const { addToWatchlist, checkIfInWatchlist } = useFirestore();
+	const { addToWatchlist, checkIfInWatchlist, removeFromWatchlist } =
+		useFirestore();
 	const toast = useToast();
 
 	const [details, setDetails] = useState({});
@@ -136,6 +137,13 @@ const Details = () => {
 
 		// Check if item is already in db
 		const isSetToWatchlist = await checkIfInWatchlist(user?.uid, dataId);
+		setIsInWatchlist(isSetToWatchlist);
+	};
+
+	const handleRemoveFromWatchlist = async () => {
+		await removeFromWatchlist(user?.uid, id);
+
+		const isSetToWatchlist = await checkIfInWatchlist(user?.uid, id);
 		setIsInWatchlist(isSetToWatchlist);
 	};
 
@@ -275,7 +283,7 @@ const Details = () => {
 									<Button
 										colorScheme="green"
 										variant={"outline"}
-										onClick={() => console.log("click")}
+										onClick={() => handleRemoveFromWatchlist()}
 										leftIcon={<CheckCircleIcon />}>
 										In Watchlist
 									</Button>

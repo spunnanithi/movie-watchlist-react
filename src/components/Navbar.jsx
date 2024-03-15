@@ -19,6 +19,7 @@ import {
 	MenuItem,
 	MenuList,
 	useDisclosure,
+	useToast,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
@@ -30,12 +31,27 @@ import { MdLogout } from "react-icons/md";
 const Navbar = () => {
 	const { user, signInWithGoogle, logout } = useAuth();
 	const { onOpen, isOpen, onClose } = useDisclosure();
+	const toast = useToast();
 
 	const handleGoogleLogin = async () => {
 		try {
 			await signInWithGoogle();
+			toast({
+				title: "Success",
+				description: "You are logged in through Google",
+				status: "success",
+				duration: 5000,
+				isClosable: true,
+			});
 			console.log("Successfully logged In!");
 		} catch (err) {
+			toast({
+				title: "Error",
+				description: "Unable to log in through Google",
+				status: "error",
+				duration: 5000,
+				isClosable: true,
+			});
 			console.log("Auth Error: ", err);
 		}
 	};
@@ -101,7 +117,16 @@ const Navbar = () => {
 											icon={<Icon as={MdLogout} fontSize={20} />}
 											_hover={{ bg: "gray.500" }}
 											bg={"gray.700"}
-											onClick={logout}>
+											onClick={() => {
+												toast({
+													title: "Success",
+													description: "You are logged out",
+													status: "success",
+													duration: 5000,
+													isClosable: true,
+												});
+												logout;
+											}}>
 											Logout
 										</MenuItem>
 									</MenuGroup>
@@ -140,7 +165,11 @@ const Navbar = () => {
 						<Link to="/search">
 							<SearchIcon fontSize={"xl"} />
 						</Link>
-						<IconButton onClick={onOpen} icon={<HamburgerIcon />} />
+						<IconButton
+							bg={"gray.700"}
+							onClick={onOpen}
+							icon={<HamburgerIcon color={"whiteAlpha.900"} />}
+						/>
 						<Drawer isOpen={isOpen} placement="right" onClose={onClose}>
 							<DrawerOverlay />
 							<DrawerContent bg={"black"}>
@@ -184,7 +213,16 @@ const Navbar = () => {
 												<Button
 													variant={"outline"}
 													colorScheme="red"
-													onClick={logout}>
+													onClick={() => {
+														toast({
+															title: "Success",
+															description: "You are logged out",
+															status: "success",
+															duration: 5000,
+															isClosable: true,
+														});
+														logout;
+													}}>
 													Logout
 												</Button>
 											</>

@@ -10,10 +10,10 @@ const styles = {
 	global: (props) => ({
 		body: {
 			bg: mode(
-				"blackAlpha.900",
-				props.theme.semanticTokens.colors["chakra-body-bg"]._light
+				props.theme.semanticTokens.colors["chakra-body-bg"]._light,
+				"blackAlpha.900"
 			)(props),
-			color: mode("whiteAlpha.900", "whiteAlpha.100")(props),
+			color: mode("whiteAlpha.100", "whiteAlpha.900")(props),
 		},
 	}),
 };

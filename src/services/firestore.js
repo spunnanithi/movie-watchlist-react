@@ -1,4 +1,5 @@
 import { useToast } from "@chakra-ui/react";
+import { useCallback } from "react";
 import { db } from "./firebase";
 import {
 	addDoc,
@@ -7,6 +8,7 @@ import {
 	doc,
 	getDoc,
 	setDoc,
+	getDocs,
 } from "firebase/firestore";
 
 export const useFirestore = () => {
@@ -17,6 +19,19 @@ export const useFirestore = () => {
 		const docRef = await addDoc(collection(db, collectionName), data);
 		console.log("Document written with ID: ", docRef.id);
 	};
+
+	// * NOTE: Use useCallback to prevent infinite looping during method calls on Watchlist page *//
+	const getWatchlist = useCallback(async (userId) => {
+		const querySnapshot = await getDocs(
+			collection(db, "users", userId?.toString(), "watchlist")
+		);
+
+		const data = querySnapshot.docs.map((doc) => ({
+			...doc.data(),
+		}));
+
+		return data;
+	}, []);
 
 	const addToWatchlist = async (userId, dataId, data) => {
 		try {
@@ -101,6 +116,7 @@ export const useFirestore = () => {
 
 	return {
 		addDocument,
+		getWatchlist,
 		addToWatchlist,
 		checkIfInWatchlist,
 		removeFromWatchlist,

@@ -1,25 +1,35 @@
 import {
 	Avatar,
 	Box,
+	Button,
 	Container,
+	Drawer,
+	DrawerBody,
+	DrawerCloseButton,
+	DrawerContent,
+	DrawerHeader,
+	DrawerOverlay,
 	Flex,
 	Icon,
+	IconButton,
 	Menu,
 	MenuButton,
 	MenuDivider,
 	MenuGroup,
 	MenuItem,
 	MenuList,
+	useDisclosure,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-import { Search2Icon } from "@chakra-ui/icons";
+import { HamburgerIcon, Search2Icon, SearchIcon } from "@chakra-ui/icons";
 import { FcGoogle } from "react-icons/fc";
 import { MdListAlt } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
 
 const Navbar = () => {
 	const { user, signInWithGoogle, logout } = useAuth();
+	const { onOpen, isOpen, onClose } = useDisclosure();
 
 	const handleGoogleLogin = async () => {
 		try {
@@ -31,7 +41,14 @@ const Navbar = () => {
 	};
 
 	return (
-		<Box py={4} mb={2}>
+		<Box
+			position={"fixed"}
+			bg={"blackAlpha.900"}
+			width={"100%"}
+			zIndex={50}
+			top={0}
+			py={4}
+			mb={2}>
 			<Container maxW={"container.xl"}>
 				<Flex justifyContent={"space-between"}>
 					<Link to="/">
@@ -46,7 +63,10 @@ const Navbar = () => {
 					</Link>
 
 					{/* DESKTOP */}
-					<Flex gap={"4"} alignItems={"center"}>
+					<Flex
+						gap={"4"}
+						alignItems={"center"}
+						display={{ base: "none", md: "flex" }}>
 						<Link to="/">Home</Link>
 						<Link to="/movies">Movies</Link>
 						<Link to="/shows">TV Shows</Link>
@@ -110,6 +130,69 @@ const Navbar = () => {
 								</MenuList>
 							</Menu>
 						)}
+					</Flex>
+
+					{/* Mobile */}
+					<Flex
+						display={{ base: "flex", md: "none" }}
+						alignItems={"center"}
+						gap="4">
+						<Link to="/search">
+							<SearchIcon fontSize={"xl"} />
+						</Link>
+						<IconButton onClick={onOpen} icon={<HamburgerIcon />} />
+						<Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+							<DrawerOverlay />
+							<DrawerContent bg={"black"}>
+								<DrawerCloseButton />
+								<DrawerHeader>
+									{user ? (
+										<Flex alignItems="center" gap="2">
+											<Avatar
+												src={user?.photoURL}
+												bg="red.500"
+												size={"sm"}
+												name={user?.email}
+											/>
+											<Box fontSize={"sm"}>
+												{user?.displayName || user?.email}
+											</Box>
+										</Flex>
+									) : (
+										<Flex alignItems="center" gap="2">
+											<Avatar
+												size={"sm"}
+												bg="gray.700"
+												as="button"
+												onClick={handleGoogleLogin}
+											/>
+											<Box fontSize={"sm"}>
+												{user?.displayName || user?.email}
+											</Box>
+										</Flex>
+									)}
+								</DrawerHeader>
+
+								<DrawerBody>
+									<Flex flexDirection={"column"} gap={"4"} onClick={onClose}>
+										<Link to="/">Home</Link>
+										<Link to="/movies">Movies</Link>
+										<Link to="/shows">TV Shows</Link>
+										{user && (
+											<>
+												<Link to="/watchlist">Watchlist</Link>
+												<Button
+													variant={"outline"}
+													colorScheme="red"
+													onClick={logout}>
+													Logout
+												</Button>
+											</>
+										)}
+									</Flex>
+								</DrawerBody>
+							</DrawerContent>
+						</Drawer>
 					</Flex>
 				</Flex>
 			</Container>

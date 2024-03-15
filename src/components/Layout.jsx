@@ -1,10 +1,13 @@
+import { Box } from "@chakra-ui/react";
 import Navbar from "./Navbar";
 
 const Layout = ({ children }) => {
 	return (
 		<>
 			<Navbar />
-			<main>{children}</main>
+			<Box mt={28}>
+				<main>{children}</main>
+			</Box>
 		</>
 	);
 };

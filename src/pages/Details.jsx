@@ -20,6 +20,7 @@ import {
 	Spinner,
 	Text,
 	Icon,
+	useToast,
 } from "@chakra-ui/react";
 import {
 	CalendarIcon,
@@ -33,10 +34,16 @@ import {
 	resolveRatingColor,
 } from "../utils/helpers";
 import VideoComponent from "../components/VideoComponent";
+import { useAuth } from "../context/useAuth";
+import { useFirestore } from "../services/firestore";
 
 const Details = () => {
 	const { type, id } = useParams();
 	const [loading, setLoading] = useState(true);
+
+	const { user } = useAuth();
+	const { addToWatchlist } = useFirestore();
+	const toast = useToast();
 
 	const [details, setDetails] = useState({});
 	const [cast, setCast] = useState([]);
@@ -102,6 +109,29 @@ const Details = () => {
 
 		fetchData();
 	}, [type, id]);
+
+	const handleSaveToWatchlist = async () => {
+		if (!user) {
+			toast({
+				title: "Login to add to watchlist",
+				status: "error",
+				isClosable: true,
+			});
+			return;
+		}
+		const data = {
+			id: details?.id,
+			title: details?.title || details?.name,
+			type: type,
+			poster_path: details?.poster_path,
+			release_date: details?.release_date || details?.first_air_date,
+			vote_average: details?.vote_average,
+			overview: details?.overview,
+		};
+
+		const dataId = data?.id?.toString();
+		await addToWatchlist(user?.uid, dataId, data);
+	};
 
 	// console.log(details);
 	// console.log(cast);
@@ -234,7 +264,7 @@ const Details = () => {
 								<Button
 									colorScheme="whiteAlpha"
 									variant={"outline"}
-									onClick={() => console.log("click")}
+									onClick={() => handleSaveToWatchlist()}
 									leftIcon={<SmallAddIcon color={"whiteAlpha.900"} />}>
 									<Text color={"whiteAlpha.900"}>Add To Watchlist</Text>
 								</Button>

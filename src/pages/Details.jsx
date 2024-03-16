@@ -22,6 +22,8 @@ import {
 	Text,
 	Icon,
 	useToast,
+	Skeleton,
+	Divider,
 } from "@chakra-ui/react";
 import {
 	CalendarIcon,
@@ -38,6 +40,7 @@ import {
 import VideoComponent from "../components/VideoComponent";
 import { useAuth } from "../context/useAuth";
 import { useFirestore } from "../services/firestore";
+import CustomHeading from "../components/CustomHeading";
 
 const Details = () => {
 	const { type, id } = useParams();
@@ -134,7 +137,7 @@ const Details = () => {
 	// console.log(cast);
 	// console.log("video", video);
 	// console.log("videos", videos);
-	console.log(recommendations);
+	// console.log(recommendations);
 
 	// Upon mount, check to see if current item is already in db
 	useEffect(() => {
@@ -150,7 +153,7 @@ const Details = () => {
 
 	if (loading) {
 		return (
-			<Flex justifyContent={"center"} alignContent={"center"}>
+			<Flex height={"100vh"} justifyContent={"center"} alignContent={"center"}>
 				<Spinner size={"xl"} color="teal" />
 			</Flex>
 		);
@@ -327,13 +330,10 @@ const Details = () => {
 					xl: "container.xl",
 				}}
 				pb={10}>
-				<Heading
-					as={"h2"}
-					fontSize={"medium"}
-					textTransform={"uppercase"}
-					mt={10}>
-					Cast
-				</Heading>
+				<Box mt={10}>
+					<CustomHeading>Cast</CustomHeading>
+					<Divider mt={2} />
+				</Box>
 				<Flex mt={5} mb={10} overflowX={"scroll"} gap={5}>
 					{cast?.length === 0 && <Text>No cast found</Text>}
 					{cast &&
@@ -361,35 +361,42 @@ const Details = () => {
 				</Flex>
 
 				{/* Videos */}
-				<Heading
-					as={"h2"}
-					fontSize={"medium"}
-					textTransform={"uppercase"}
-					mt={10}
-					mb={5}>
-					Videos
-				</Heading>
-				<VideoComponent id={video?.key} title={title} />
+				<Box mt={10} mb={5}>
+					<CustomHeading>Videos</CustomHeading>
+					<Divider mt={2} />
+				</Box>
+				{video && loading ? (
+					<Skeleton height={"500"} />
+				) : (
+					<VideoComponent id={video?.key} title={title} />
+				)}
 				<Flex mt={5} mb={10} overflowX={"scroll"} gap={5}>
-					{videos?.map((video) => (
-						<Box key={video?.id}>
-							<VideoComponent id={video?.key} small />
-							<Text fontSize={"small"} fontWeight={"bold"} mt={2} noOfLines={2}>
-								{video?.name}
-							</Text>
-						</Box>
-					))}
+					{videos &&
+						videos?.map((video) =>
+							loading ? (
+								<Box key={video?.id}>
+									<Skeleton height={"250"} />
+								</Box>
+							) : (
+								<Box key={video?.id}>
+									<VideoComponent id={video?.key} small />
+									<Text
+										fontSize={"small"}
+										fontWeight={"bold"}
+										mt={2}
+										noOfLines={2}>
+										{video?.name}
+									</Text>
+								</Box>
+							)
+						)}
 				</Flex>
 
 				{/* Recommendations */}
-				<Heading
-					as={"h2"}
-					fontSize={"medium"}
-					textTransform={"uppercase"}
-					mt={10}
-					mb={5}>
-					Recommendations
-				</Heading>
+				<Box mt={10} mb={1}>
+					<CustomHeading>Recommendations</CustomHeading>
+					<Divider mt={2} />
+				</Box>
 				<Flex
 					mt={5}
 					mb={10}

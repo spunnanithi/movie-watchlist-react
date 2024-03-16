@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react";
-import {
-	Box,
-	Container,
-	Flex,
-	Grid,
-	Heading,
-	Select,
-	Skeleton,
-} from "@chakra-ui/react";
+import { Box, Container, Flex, Grid, Select, Skeleton } from "@chakra-ui/react";
 import { fetchAllTrending } from "../services/api";
 import CardComponent from "../components/CardComponent";
+import CustomHeading from "../components/CustomHeading";
 
 const Home = () => {
 	const [data, setData] = useState([]);
@@ -43,11 +36,11 @@ const Home = () => {
 			}}>
 			<Flex justifyContent={"space-between"}>
 				<Flex alignItems={"baseline"} gap={4} my={10}>
-					<Heading as={"h2"} fontSize={"lg"} textTransform={"uppercase"}>
-						Trending {mediaType === "all" && "All Media Type"}
+					<CustomHeading>
+						Trending {mediaType === "all" && "All Media Types"}
 						{mediaType === "movie" && "Movies"}
 						{mediaType === "tv" && "TV Shows"}
-					</Heading>
+					</CustomHeading>
 
 					<Flex
 						alignItems={"center"}

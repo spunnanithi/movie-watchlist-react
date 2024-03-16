@@ -1,18 +1,13 @@
-import {
-	Container,
-	Heading,
-	Grid,
-	Skeleton,
-	Flex,
-	Select,
-} from "@chakra-ui/react";
+import { Container, Flex, Select } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import {
 	fetchMoviesAndShowsGenres,
 	fetchShowsDiscover,
 } from "../../services/api";
-import CardComponent from "../../components/CardComponent";
+
 import PaginationComponent from "../../components/PaginationComponent";
+import GridComponent from "../../components/GridComponent";
+import CustomHeading from "../../components/CustomHeading";
 
 const Shows = () => {
 	const [shows, setShows] = useState([]);
@@ -64,9 +59,7 @@ const Shows = () => {
 			}}>
 			<Flex justify={"space-between"}>
 				<Flex alignItems={"baseline"} my={10}>
-					<Heading as={"h2"} fontSize={"lg"} textTransform={"uppercase"}>
-						Discover TV Shows
-					</Heading>
+					<CustomHeading>Discover TV Shows</CustomHeading>
 				</Flex>
 				<Flex align={"center"} gap={4}>
 					{/* SELECT FOR POPULARITY */}
@@ -79,7 +72,7 @@ const Shows = () => {
 							setSortBy(e.target.value);
 						}}>
 						<option value="popularity.desc">Popular</option>
-						<option value="vote_average.desc&vote_count.gte=1000">
+						<option value="vote_average.desc&vote_count.gte=500">
 							Top Rated
 						</option>
 					</Select>
@@ -103,25 +96,8 @@ const Shows = () => {
 				</Flex>
 			</Flex>
 
-			<Grid
-				templateColumns={{
-					base: "1fr",
-					sm: "repeat(2, 1fr)",
-					md: "repeat(3, 1fr)",
-					lg: "repeat(4, 1fr)",
-					xl: "repeat(5, 1fr)",
-				}}
-				align={"center"}
-				gap={5}>
-				{shows &&
-					shows.map((item, index) =>
-						loading ? (
-							<Skeleton height={350} key={index} />
-						) : (
-							<CardComponent key={item?.id} item={item} type={"tv"} />
-						)
-					)}
-			</Grid>
+			{/* Grid */}
+			<GridComponent data={shows} loading={loading} mediaType={"tv"} />
 
 			{/* Pagination */}
 			<PaginationComponent

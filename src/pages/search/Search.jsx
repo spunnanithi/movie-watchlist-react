@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import { fetchSearchData } from "../../services/api";
 import CardComponent from "../../components/CardComponent";
 import PaginationComponent from "../../components/PaginationComponent";
+import CustomHeading from "../../components/CustomHeading";
 
 const Search = () => {
 	const [searchValue, setSearchValue] = useState("");
@@ -60,9 +61,7 @@ const Search = () => {
 			}}
 			minH={"100vh"}>
 			<Flex alignItems={"baseline"} gap={4} my={10}>
-				<Heading as={"h2"} fontSize={"lg"} textTransform={"uppercase"}>
-					Search
-				</Heading>
+				<CustomHeading>Search</CustomHeading>
 			</Flex>
 
 			<form onSubmit={handleSearch}>
@@ -90,16 +89,17 @@ const Search = () => {
 
 			{loading && (
 				<Flex justifyContent={"center"} mt={10}>
-					<Spinner size={"xl"} color="red" />
+					<Spinner size={"xl"} color="teal" />
 				</Flex>
 			)}
 
 			{data?.length === 0 && isFetched && (
-				<Heading textAlign={"center"} as={"h3"} fontSize={"small"} mt={10}>
+				<Heading textAlign={"center"} as={"h3"} fontSize={"medium"} mt={10}>
 					No results found
 				</Heading>
 			)}
 
+			{/* Grid */}
 			<Grid
 				mt={10}
 				templateColumns={{
@@ -125,6 +125,7 @@ const Search = () => {
 					)}
 			</Grid>
 
+			{/* Pagination */}
 			{data?.length !== 0 && isFetched && (
 				<PaginationComponent
 					activePage={activePage}

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useFirestore } from "../services/firestore";
 import { useAuth } from "../context/useAuth";
-import { Container, Flex, Grid, Heading, Spinner } from "@chakra-ui/react";
+import { Container, Flex, Grid, Spinner } from "@chakra-ui/react";
 import WatchlistCard from "../components/WatchlistCard";
+import CustomHeading from "../components/CustomHeading";
 
 const Watchlist = () => {
 	const { getWatchlist } = useFirestore();
@@ -31,22 +32,18 @@ const Watchlist = () => {
 				xl: "container.xl",
 			}}>
 			<Flex alignItems={"baseline"} gap={4} my={10}>
-				<Heading as={"h2"} fontSize={"lg"} textTransform={"uppercase"}>
-					My Watchlist
-				</Heading>
+				<CustomHeading>My Watchlist</CustomHeading>
 			</Flex>
 
 			{loading && (
-				<Flex justify={"center"} mt={10}>
+				<Flex height={"100vh"} justify={"center"} mt={10}>
 					<Spinner size={"xl"} color="teal" />
 				</Flex>
 			)}
 
 			{!loading && watchlist?.length === 0 && (
-				<Flex justify={"center"} mt={10}>
-					<Heading as={"h2"} fontSize={"medium"} textTransform={"uppercase"}>
-						Watchlist is empty
-					</Heading>
+				<Flex height={"100vh"} justify={"center"} mt={10}>
+					<CustomHeading>Watchlist is empty</CustomHeading>
 				</Flex>
 			)}
 

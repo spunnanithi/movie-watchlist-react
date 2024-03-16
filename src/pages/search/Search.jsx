@@ -60,7 +60,7 @@ const Search = () => {
 			}}
 			minH={"100vh"}>
 			<Flex alignItems={"baseline"} gap={4} my={10}>
-				<Heading as={"h2"} fontSize={"md"} textTransform={"uppercase"}>
+				<Heading as={"h2"} fontSize={"lg"} textTransform={"uppercase"}>
 					Search
 				</Heading>
 			</Flex>

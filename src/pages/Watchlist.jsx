@@ -31,7 +31,7 @@ const Watchlist = () => {
 				xl: "container.xl",
 			}}>
 			<Flex alignItems={"baseline"} gap={4} my={10}>
-				<Heading as={"h2"} fontSize={"md"} textTransform={"uppercase"}>
+				<Heading as={"h2"} fontSize={"lg"} textTransform={"uppercase"}>
 					My Watchlist
 				</Heading>
 			</Flex>

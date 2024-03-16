@@ -43,7 +43,7 @@ const Home = () => {
 			}}>
 			<Flex justifyContent={"space-between"}>
 				<Flex alignItems={"baseline"} gap={4} my={10}>
-					<Heading as={"h2"} fontSize={"md"} textTransform={"uppercase"}>
+					<Heading as={"h2"} fontSize={"lg"} textTransform={"uppercase"}>
 						Trending {mediaType === "all" && "All Media Type"}
 						{mediaType === "movie" && "Movies"}
 						{mediaType === "tv" && "TV Shows"}

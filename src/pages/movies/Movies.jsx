@@ -64,42 +64,45 @@ const Movies = () => {
 				lg: "container.lg",
 				xl: "container.xl",
 			}}>
-			<Flex alignItems={"baseline"} gap={4} my={10}>
-				<Heading as={"h2"} fontSize={"md"} textTransform={"uppercase"}>
-					Discover Movies
-				</Heading>
-
-				{/* SELECT FOR POPULARITY */}
-				<Select
-					borderColor={"teal"}
-					focusBorderColor="teal.500"
-					w={"130px"}
-					onChange={(e) => {
-						setActivePage(1);
-						setSortBy(e.target.value);
-					}}>
-					<option value="popularity.desc">Popular</option>
-					<option value="vote_average.desc&vote_count.gte=1000">
-						Top Rated
-					</option>
-				</Select>
-
-				{/* SELECT FOR GENRES */}
-				<Select
-					placeholder="Select a genre"
-					borderColor={"teal"}
-					focusBorderColor="teal.500"
-					w={"170px"}
-					onChange={(e) => {
-						setActivePage(1);
-						setGenreQuery(e.target.value);
-					}}>
-					{genres?.map((genre) => (
-						<option key={genre?.id} value={genre?.id?.toString()}>
-							{genre?.name}
+			<Flex justify={"space-between"}>
+				<Flex alignItems={"baseline"} my={10}>
+					<Heading as={"h2"} fontSize={"lg"} textTransform={"uppercase"}>
+						Discover Movies
+					</Heading>
+				</Flex>
+				<Flex align={"center"} gap={4}>
+					{/* SELECT FOR POPULARITY */}
+					<Select
+						borderColor={"teal"}
+						focusBorderColor="teal.500"
+						w={"130px"}
+						onChange={(e) => {
+							setActivePage(1);
+							setSortBy(e.target.value);
+						}}>
+						<option value="popularity.desc">Popular</option>
+						<option value="vote_average.desc&vote_count.gte=1000">
+							Top Rated
 						</option>
-					))}
-				</Select>
+					</Select>
+
+					{/* SELECT FOR GENRES */}
+					<Select
+						placeholder="Select a genre"
+						borderColor={"teal"}
+						focusBorderColor="teal.500"
+						w={"200px"}
+						onChange={(e) => {
+							setActivePage(1);
+							setGenreQuery(e.target.value);
+						}}>
+						{genres?.map((genre) => (
+							<option key={genre?.id} value={genre?.id?.toString()}>
+								{genre?.name}
+							</option>
+						))}
+					</Select>
+				</Flex>
 			</Flex>
 
 			<Grid

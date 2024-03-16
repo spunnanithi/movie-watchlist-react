@@ -5,6 +5,7 @@ const PaginationComponent = ({ activePage, totalPages, setActivePage }) => {
 		<Flex gap={2} justifyContent={"center"} alignItems={"center"}>
 			<Flex alignItems={"center"} gap={4} maxW={"250px"} my={10}>
 				<Button
+					colorScheme="teal"
 					onClick={() => setActivePage(activePage - 1)}
 					isDisabled={activePage === 1}>
 					Previous
@@ -15,6 +16,7 @@ const PaginationComponent = ({ activePage, totalPages, setActivePage }) => {
 					<Text>{totalPages}</Text>
 				</Flex>
 				<Button
+					colorScheme="teal"
 					onClick={() => setActivePage(activePage + 1)}
 					isDisabled={activePage === totalPages}>
 					Next

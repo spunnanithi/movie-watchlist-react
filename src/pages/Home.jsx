@@ -5,6 +5,7 @@ import {
 	Flex,
 	Grid,
 	Heading,
+	Select,
 	Skeleton,
 } from "@chakra-ui/react";
 import { fetchAllTrending } from "../services/api";
@@ -12,12 +13,13 @@ import CardComponent from "../components/CardComponent";
 
 const Home = () => {
 	const [data, setData] = useState([]);
+	const [mediaType, setMediaType] = useState("all");
 	const [timeWindow, setTimeWindow] = useState("day");
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		setLoading(true);
-		fetchAllTrending(timeWindow)
+		fetchAllTrending(mediaType, timeWindow)
 			.then((res) => {
 				setData(res);
 			})
@@ -27,7 +29,7 @@ const Home = () => {
 			.finally(() => {
 				setLoading(false);
 			});
-	}, [timeWindow]);
+	}, [timeWindow, mediaType]);
 
 	// console.log("data", data);
 
@@ -39,34 +41,51 @@ const Home = () => {
 				lg: "container.lg",
 				xl: "container.xl",
 			}}>
-			<Flex alignItems={"baseline"} gap={4} my={10}>
-				<Heading as={"h2"} fontSize={"md"} textTransform={"uppercase"}>
-					Trending
-				</Heading>
+			<Flex justifyContent={"space-between"}>
+				<Flex alignItems={"baseline"} gap={4} my={10}>
+					<Heading as={"h2"} fontSize={"md"} textTransform={"uppercase"}>
+						Trending {mediaType === "all" && "All Media Type"}
+						{mediaType === "movie" && "Movies"}
+						{mediaType === "tv" && "TV Shows"}
+					</Heading>
 
-				<Flex
-					alignItems={"center"}
-					gap={2}
-					border={"2px solid teal"}
-					borderRadius={"20px"}>
-					<Box
-						as="button"
-						px={3}
-						py={1}
-						borderRadius={"20px"}
-						bg={`${timeWindow === "day" ? "gray.600" : ""}`}
-						onClick={() => setTimeWindow("day")}>
-						Today
-					</Box>
-					<Box
-						as="button"
-						px={3}
-						py={1}
-						borderRadius={"20px"}
-						bg={`${timeWindow === "week" ? "gray.600" : ""}`}
-						onClick={() => setTimeWindow("week")}>
-						This Week
-					</Box>
+					<Flex
+						alignItems={"center"}
+						gap={2}
+						border={"2px solid teal"}
+						borderRadius={"20px"}>
+						<Box
+							as="button"
+							px={3}
+							py={1}
+							borderRadius={"20px"}
+							bg={`${timeWindow === "day" ? "gray.600" : ""}`}
+							onClick={() => setTimeWindow("day")}>
+							Today
+						</Box>
+						<Box
+							as="button"
+							px={3}
+							py={1}
+							borderRadius={"20px"}
+							bg={`${timeWindow === "week" ? "gray.600" : ""}`}
+							onClick={() => setTimeWindow("week")}>
+							This Week
+						</Box>
+					</Flex>
+				</Flex>
+				<Flex align={"center"}>
+					<Select
+						borderColor={"teal"}
+						focusBorderColor="teal.500"
+						w={"150px"}
+						onChange={(e) => {
+							setMediaType(e.target.value);
+						}}>
+						<option value="all">All</option>
+						<option value="movie">Movies</option>
+						<option value="tv">TV Shows</option>
+					</Select>
 				</Flex>
 			</Flex>
 

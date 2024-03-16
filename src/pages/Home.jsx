@@ -78,6 +78,7 @@ const Home = () => {
 					lg: "repeat(4, 1fr)",
 					xl: "repeat(5, 1fr)",
 				}}
+				align={"center"}
 				gap={5}>
 				{data &&
 					data.map((item, index) =>

@@ -7,30 +7,50 @@ import {
 	Select,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { fetchShowsDiscover } from "../../services/api";
+import {
+	fetchMoviesAndShowsGenres,
+	fetchShowsDiscover,
+} from "../../services/api";
 import CardComponent from "../../components/CardComponent";
 import PaginationComponent from "../../components/PaginationComponent";
 
 const Shows = () => {
 	const [shows, setShows] = useState([]);
+	const [genres, setGenres] = useState([]);
 	const [activePage, setActivePage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [sortBy, setSortBy] = useState("popularity.desc");
+	const [genreQuery, setGenreQuery] = useState("");
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		setLoading(true);
-		fetchShowsDiscover(activePage, sortBy)
-			.then((res) => {
-				setShows(res?.results);
-				setActivePage(res?.page);
-				setTotalPages(res?.total_pages);
-			})
-			.catch((err) => {
+		const fetchData = async () => {
+			try {
+				const [showsData, genresData] = await Promise.all([
+					fetchShowsDiscover(activePage, sortBy, genreQuery),
+					fetchMoviesAndShowsGenres("tv"),
+				]);
+
+				// Set Movies data
+				setShows(showsData?.results);
+
+				// Set Active Page data
+				setActivePage(showsData?.page);
+
+				// Set Total Pages data
+				setTotalPages(showsData?.total_pages);
+
+				// Set Genres data
+				setGenres(genresData?.genres);
+			} catch (err) {
 				console.log(err);
-			})
-			.finally(() => setLoading(false));
-	}, [activePage, sortBy]);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchData();
+	}, [activePage, sortBy, genreQuery]);
 
 	// console.log(shows);
 
@@ -47,6 +67,7 @@ const Shows = () => {
 					Discover TV Shows
 				</Heading>
 
+				{/* SELECT FOR POPULARITY */}
 				<Select
 					borderColor={"teal"}
 					focusBorderColor="teal.500"
@@ -60,6 +81,23 @@ const Shows = () => {
 						Top Rated
 					</option>
 				</Select>
+
+				{/* SELECT FOR GENRES */}
+				<Select
+					placeholder="Select a genre"
+					borderColor={"teal"}
+					focusBorderColor="teal.500"
+					w={"170px"}
+					onChange={(e) => {
+						setActivePage(1);
+						setGenreQuery(e.target.value);
+					}}>
+					{genres?.map((genre) => (
+						<option key={genre?.id} value={genre?.id?.toString()}>
+							{genre?.name}
+						</option>
+					))}
+				</Select>
 			</Flex>
 
 			<Grid
@@ -70,6 +108,7 @@ const Shows = () => {
 					lg: "repeat(4, 1fr)",
 					xl: "repeat(5, 1fr)",
 				}}
+				align={"center"}
 				gap={5}>
 				{shows &&
 					shows.map((item, index) =>

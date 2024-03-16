@@ -54,7 +54,7 @@ const Movies = () => {
 
 	// console.log(movies);
 	// console.log(genres);
-	console.log(genreQuery);
+	// console.log(genreQuery);
 
 	return (
 		<Container
@@ -110,6 +110,7 @@ const Movies = () => {
 					lg: "repeat(4, 1fr)",
 					xl: "repeat(5, 1fr)",
 				}}
+				align={"center"}
 				gap={5}>
 				{movies &&
 					movies.map((item, index) =>

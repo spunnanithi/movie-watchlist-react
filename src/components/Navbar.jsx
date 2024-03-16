@@ -31,13 +31,8 @@ import tvIcon from "../assets/tv-icon.svg";
 import { FcGoogle } from "react-icons/fc";
 import { MdListAlt } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
-import PopupNavItem from "./PopupNavItem";
-import { useEffect, useState } from "react";
-import { fetchMoviesAndShowsGenres } from "../services/api";
 
 const Navbar = () => {
-	const [genres, setGenres] = useState([]);
-
 	const { user, signInWithGoogle, logout } = useAuth();
 	const { onOpen, isOpen, onClose } = useDisclosure();
 	const toast = useToast();
@@ -64,16 +59,6 @@ const Navbar = () => {
 			console.log("Auth Error: ", err);
 		}
 	};
-
-	useEffect(() => {
-		fetchMoviesAndShowsGenres("movie")
-			.then((res) => {
-				setGenres(res?.genres);
-			})
-			.catch((err) => console.log(err));
-	}, []);
-
-	// console.log(genres);
 
 	return (
 		<Box
@@ -133,7 +118,6 @@ const Navbar = () => {
 							to="/">
 							Home
 						</Link>
-						<PopupNavItem genres={genres} />
 						<Link
 							as={NavLink}
 							_hover={{

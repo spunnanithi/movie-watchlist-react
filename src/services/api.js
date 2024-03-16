@@ -16,6 +16,15 @@ export const fetchAllTrending = async (timeWindow = "day") => {
 	return data?.results;
 };
 
+// MOVIES & TV SHOWS - Genres
+export const fetchMoviesAndShowsGenres = async (mediaType) => {
+	const res = await axios.get(
+		`${baseUrl}/genre/${mediaType}/list?api_key=${apiKey}`
+	);
+
+	return res?.data;
+};
+
 // MOVIES & TV SHOWS - Details
 export const fetchMovieAndShowsDetails = async (mediaType, id) => {
 	const res = await axios.get(
@@ -44,9 +53,13 @@ export const fetchMovieAndShowsVideos = async (mediaType, id) => {
 };
 
 // MOVIES - Discover
-export const fetchMoviesDiscover = async (page, sortBy) => {
+export const fetchMoviesDiscover = async (
+	page,
+	sortBy = "popularity.desc",
+	genreId = ""
+) => {
 	const res = await axios.get(
-		`${baseUrl}/discover/movie?api_key=${apiKey}&page=${page}&sort_by=${sortBy}`
+		`${baseUrl}/discover/movie?api_key=${apiKey}&page=${page}&sort_by=${sortBy}&with_genres=${genreId}`
 	);
 
 	return res?.data;

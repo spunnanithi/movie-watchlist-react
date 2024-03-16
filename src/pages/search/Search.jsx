@@ -57,7 +57,8 @@ const Search = () => {
 				sm: "container.md",
 				lg: "container.lg",
 				xl: "container.xl",
-			}}>
+			}}
+			minH={"100vh"}>
 			<Flex alignItems={"baseline"} gap={4} my={10}>
 				<Heading as={"h2"} fontSize={"md"} textTransform={"uppercase"}>
 					Search

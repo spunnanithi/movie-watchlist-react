@@ -292,8 +292,12 @@ const Details = () => {
 							<Flex mt={6} gap={2}>
 								{details?.genres?.map((genre) => (
 									<Badge
-										colorScheme={"whiteAlpha"}
-										variant={"solid"}
+										colorScheme="whiteAlpha"
+										bg={"whiteAlpha.300"}
+										border={"1px"}
+										borderColor={"whiteAlpha.900"}
+										textColor={"whiteAlpha.900"}
+										variant={"outline"}
 										p={1}
 										key={genre?.id}>
 										{genre?.name}

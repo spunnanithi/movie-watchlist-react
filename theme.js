@@ -10,7 +10,7 @@ const config = {
 const styles = {
 	global: () => ({
 		body: {
-			bg: "blackAlpha.900",
+			bg: "blackAlpha.800",
 			color: "whiteAlpha.900",
 		},
 	}),

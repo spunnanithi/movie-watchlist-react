@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
 	fetchMovieAndShowsCredits,
 	fetchMovieAndShowsDetails,
@@ -96,6 +96,9 @@ const Details = () => {
 		};
 
 		fetchData();
+
+		// Scroll to top upon movie redirect
+		window.scrollTo(0, 0);
 	}, [type, id]);
 
 	const handleSaveToWatchlist = async () => {
@@ -411,7 +414,7 @@ const Details = () => {
 					{recommendations &&
 						recommendations?.map((item) => (
 							<Box key={item?.id} maxW={"150px"} minW={"150px"}>
-								<NavLink to={`/${item?.media_type}/${item?.id}`}>
+								<Link to={`/${item?.media_type}/${item?.id}`}>
 									<Image
 										transform={"scale(1)"}
 										_hover={{
@@ -432,7 +435,7 @@ const Details = () => {
 										objectFit={"cover"}
 										borderRadius={"md"}
 									/>
-								</NavLink>
+								</Link>
 								<Text>{item?.title || item?.name}</Text>
 								<Text fontSize={"small"} color={"gray.400"}>
 									{type === "movie" ? "Movie" : "TV Show"}

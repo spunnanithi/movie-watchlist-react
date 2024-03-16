@@ -66,9 +66,13 @@ export const fetchMoviesDiscover = async (
 };
 
 // TV SHOWS - Discover
-export const fetchShowsDiscover = async (page, sortBy) => {
+export const fetchShowsDiscover = async (
+	page,
+	sortBy = "popularity.desc",
+	genreId = ""
+) => {
 	const res = await axios.get(
-		`${baseUrl}/discover/tv?api_key=${apiKey}&page=${page}&sort_by=${sortBy}`
+		`${baseUrl}/discover/tv?api_key=${apiKey}&page=${page}&sort_by=${sortBy}&with_genres=${genreId}`
 	);
 
 	return res?.data;

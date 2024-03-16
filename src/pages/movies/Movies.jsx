@@ -7,32 +7,54 @@ import {
 	Select,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { fetchMoviesDiscover } from "../../services/api";
+import {
+	fetchMoviesAndShowsGenres,
+	fetchMoviesDiscover,
+} from "../../services/api";
 import CardComponent from "../../components/CardComponent";
 import PaginationComponent from "../../components/PaginationComponent";
 
 const Movies = () => {
 	const [movies, setMovies] = useState([]);
+	const [genres, setGenres] = useState([]);
 	const [activePage, setActivePage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [sortBy, setSortBy] = useState("popularity.desc");
+	const [genreQuery, setGenreQuery] = useState("");
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		setLoading(true);
-		fetchMoviesDiscover(activePage, sortBy)
-			.then((res) => {
-				setMovies(res?.results);
-				setActivePage(res?.page);
-				setTotalPages(res?.total_pages);
-			})
-			.catch((err) => {
+		const fetchData = async () => {
+			try {
+				const [moviesData, genresData] = await Promise.all([
+					fetchMoviesDiscover(activePage, sortBy, genreQuery),
+					fetchMoviesAndShowsGenres("movie"),
+				]);
+
+				// Set Movies data
+				setMovies(moviesData?.results);
+
+				// Set Active Page data
+				setActivePage(moviesData?.page);
+
+				// Set Total Pages data
+				setTotalPages(moviesData?.total_pages);
+
+				// Set Genres data
+				setGenres(genresData?.genres);
+			} catch (err) {
 				console.log(err);
-			})
-			.finally(() => setLoading(false));
-	}, [activePage, sortBy]);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchData();
+	}, [activePage, sortBy, genreQuery]);
 
 	// console.log(movies);
+	// console.log(genres);
+	console.log(genreQuery);
 
 	return (
 		<Container
@@ -47,6 +69,7 @@ const Movies = () => {
 					Discover Movies
 				</Heading>
 
+				{/* SELECT FOR POPULARITY */}
 				<Select
 					borderColor={"teal"}
 					focusBorderColor="teal.500"
@@ -59,6 +82,23 @@ const Movies = () => {
 					<option value="vote_average.desc&vote_count.gte=1000">
 						Top Rated
 					</option>
+				</Select>
+
+				{/* SELECT FOR GENRES */}
+				<Select
+					placeholder="Select a genre"
+					borderColor={"teal"}
+					focusBorderColor="teal.500"
+					w={"170px"}
+					onChange={(e) => {
+						setActivePage(1);
+						setGenreQuery(e.target.value);
+					}}>
+					{genres?.map((genre) => (
+						<option key={genre?.id} value={genre?.id?.toString()}>
+							{genre?.name}
+						</option>
+					))}
 				</Select>
 			</Flex>
 

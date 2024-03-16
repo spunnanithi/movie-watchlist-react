@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import {
 	fetchMovieAndShowsCredits,
 	fetchMovieAndShowsDetails,
 	fetchMovieAndShowsVideos,
+	fetchMoviesAndShowsRecommendations,
 	imagePath,
 	imagePathOriginal,
 } from "../services/api";
@@ -26,6 +27,7 @@ import {
 	CalendarIcon,
 	CheckCircleIcon,
 	SmallAddIcon,
+	StarIcon,
 	TimeIcon,
 } from "@chakra-ui/icons";
 import {
@@ -51,15 +53,18 @@ const Details = () => {
 	const [cast, setCast] = useState([]);
 	const [video, setVideo] = useState(null);
 	const [videos, setVideos] = useState([]);
+	const [recommendations, setRecommendations] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const [detailsData, creditsData, videosData] = await Promise.all([
-					fetchMovieAndShowsDetails(type, id),
-					fetchMovieAndShowsCredits(type, id),
-					fetchMovieAndShowsVideos(type, id),
-				]);
+				const [detailsData, creditsData, videosData, recommendationsData] =
+					await Promise.all([
+						fetchMovieAndShowsDetails(type, id),
+						fetchMovieAndShowsCredits(type, id),
+						fetchMovieAndShowsVideos(type, id),
+						fetchMoviesAndShowsRecommendations(type, id),
+					]);
 
 				// Set Details data
 				setDetails(detailsData);
@@ -77,6 +82,9 @@ const Details = () => {
 					?.filter((video) => video?.type !== "Trailer")
 					.slice(0, 10);
 				setVideos(videos);
+
+				// Set Recommendations data
+				setRecommendations(recommendationsData?.results?.slice(0, 15));
 			} catch (err) {
 				console.log(err);
 			} finally {
@@ -126,6 +134,7 @@ const Details = () => {
 	// console.log(cast);
 	// console.log("video", video);
 	// console.log("videos", videos);
+	console.log(recommendations);
 
 	// Upon mount, check to see if current item is already in db
 	useEffect(() => {
@@ -370,6 +379,70 @@ const Details = () => {
 							</Text>
 						</Box>
 					))}
+				</Flex>
+
+				{/* Recommendations */}
+				<Heading
+					as={"h2"}
+					fontSize={"medium"}
+					textTransform={"uppercase"}
+					mt={10}
+					mb={5}>
+					Recommendations
+				</Heading>
+				<Flex
+					mt={5}
+					mb={10}
+					px={2}
+					pt={3}
+					overflowX={"scroll"}
+					h={"400px"}
+					gap={5}>
+					{recommendations?.length === 0 && (
+						<Text>No recommendations found</Text>
+					)}
+					{recommendations &&
+						recommendations?.map((item) => (
+							<Box key={item?.id} maxW={"150px"} minW={"150px"}>
+								<NavLink to={`/${item?.media_type}/${item?.id}`}>
+									<Image
+										transform={"scale(1)"}
+										_hover={{
+											transform: { base: "scale(1)", md: "scale(1.08)" },
+											transition: "transform 0.2s ease-in-out",
+											zIndex: 10,
+										}}
+										src={`${imagePath}${item?.poster_path}`}
+										// Replace with placeholder image if src cannot be found
+										onError={(e) => {
+											e.currentTarget.src =
+												"https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg";
+											e.currentTarget.onerror = null;
+										}}
+										w={"100%"}
+										h={"225px"}
+										mb={3}
+										objectFit={"cover"}
+										borderRadius={"md"}
+									/>
+								</NavLink>
+								<Text>{item?.title || item?.name}</Text>
+								<Text fontSize={"small"} color={"gray.400"}>
+									{type === "movie" ? "Movie" : "TV Show"}
+								</Text>
+								<Text fontSize={"small"} color={"teal.300"}>
+									{new Date(
+										item?.release_date || item?.first_air_date
+									).getFullYear()}
+								</Text>
+								<Flex alignItems={"center"} gap={1} mt={1}>
+									<StarIcon fontSize={"medium"} />
+									<Text fontSize={"medium"}>
+										{item?.vote_average?.toFixed(1)}
+									</Text>
+								</Flex>
+							</Box>
+						))}
 				</Flex>
 			</Container>
 		</Box>

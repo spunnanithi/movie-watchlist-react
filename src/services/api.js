@@ -52,6 +52,15 @@ export const fetchMovieAndShowsVideos = async (mediaType, id) => {
 	return res?.data;
 };
 
+// MOVIES & TV SHOWS - Recommendations
+export const fetchMoviesAndShowsRecommendations = async (mediaType, id) => {
+	const res = await axios.get(
+		`${baseUrl}/${mediaType}/${id}/recommendations?api_key=${apiKey}`
+	);
+
+	return res?.data;
+};
+
 // MOVIES - Discover
 export const fetchMoviesDiscover = async (
 	page,

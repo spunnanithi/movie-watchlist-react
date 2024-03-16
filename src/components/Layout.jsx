@@ -1,13 +1,15 @@
 import { Box } from "@chakra-ui/react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const Layout = ({ children }) => {
 	return (
 		<>
 			<Navbar />
-			<Box mt={28}>
+			<Box my={28}>
 				<main>{children}</main>
 			</Box>
+			<Footer />
 		</>
 	);
 };

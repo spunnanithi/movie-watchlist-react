@@ -273,7 +273,7 @@ const Details = () => {
 									</Button>
 								) : (
 									<Button
-										colorScheme="whiteAlpha"
+										colorScheme="whiteAlpha.900"
 										variant={"outline"}
 										onClick={() => handleSaveToWatchlist()}
 										leftIcon={<SmallAddIcon color={"whiteAlpha.900"} />}>
@@ -291,7 +291,11 @@ const Details = () => {
 							</Text>
 							<Flex mt={6} gap={2}>
 								{details?.genres?.map((genre) => (
-									<Badge colorScheme={"whiteAlpha"} p={1} key={genre?.id}>
+									<Badge
+										colorScheme={"whiteAlpha"}
+										variant={"solid"}
+										p={1}
+										key={genre?.id}>
 										{genre?.name}
 									</Badge>
 								))}

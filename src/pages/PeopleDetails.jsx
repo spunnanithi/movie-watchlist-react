@@ -95,13 +95,20 @@ const PeopleDetails = () => {
 				backgroundSize={"cover"}
 				backgroundPosition={"center"}
 				width={"100%"}
-				height={{ base: "auto", md: "500px" }}
+				height={{ base: "auto" }}
+				minHeight={"500"}
 				py={2}
 				zIndex={-1}
 				display={"flex"}
 				alignItems={"center"}>
 				{/* Main Content */}
-				<Container maxW={"container.xl"}>
+				<Container
+					maxW={{
+						base: "container.sm",
+						sm: "container.md",
+						lg: "container.lg",
+						xl: "container.xl",
+					}}>
 					<Flex
 						alignItems={"center"}
 						gap={10}

@@ -41,6 +41,7 @@ import VideoComponent from "../components/VideoComponent";
 import { useAuth } from "../context/useAuth";
 import { useFirestore } from "../services/firestore";
 import CustomHeading from "../components/CustomHeading";
+import CustomCardBadge from "../components/CustomCardBadge";
 
 const Details = () => {
 	const { type, id } = useParams();
@@ -427,9 +428,7 @@ const Details = () => {
 								maxW={"150px"}
 								minW={"150px"}>
 								<Flex position={"absolute"} top={2} right={2}>
-									<Badge variant={"solid"} zIndex={1}>
-										{type === "movie" ? "Movie" : "TV"}
-									</Badge>
+									<CustomCardBadge type={type} />
 								</Flex>
 								<Link to={`/${item?.media_type}/${item?.id}`}>
 									<Image

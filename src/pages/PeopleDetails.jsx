@@ -21,6 +21,7 @@ import {
 import { CalendarIcon, StarIcon } from "@chakra-ui/icons";
 import { calculateAge } from "../utils/helpers";
 import CustomHeading from "../components/CustomHeading";
+import CustomCardBadge from "../components/CustomCardBadge";
 
 const PeopleDetails = () => {
 	const { id } = useParams();
@@ -228,9 +229,7 @@ const PeopleDetails = () => {
 								maxW={"150px"}
 								minW={"150px"}>
 								<Flex position={"absolute"} top={2} right={2}>
-									<Badge variant={"solid"} zIndex={1}>
-										{item?.media_type === "movie" ? "Movie" : "TV"}
-									</Badge>
+									<CustomCardBadge type={item?.media_type} />
 								</Flex>
 								<Link to={`/${item?.media_type}/${item?.id}`}>
 									<Image
@@ -291,9 +290,7 @@ const PeopleDetails = () => {
 								maxW={"150px"}
 								minW={"150px"}>
 								<Flex position={"absolute"} top={2} right={2}>
-									<Badge variant={"solid"} zIndex={1}>
-										{item?.media_type === "movie" ? "Movie" : "TV"}
-									</Badge>
+									<CustomCardBadge type={item?.media_type} />
 								</Flex>
 								<Link to={`/${item?.media_type}/${item?.id}`}>
 									<Image

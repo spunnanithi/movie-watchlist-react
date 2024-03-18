@@ -1,7 +1,8 @@
-import { Badge, Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { imagePath } from "../services/api";
 import { StarIcon } from "@chakra-ui/icons";
+import CustomCardBadge from "./CustomCardBadge";
 
 const CardComponent = ({ item, type }) => {
 	return (
@@ -18,9 +19,7 @@ const CardComponent = ({ item, type }) => {
 					},
 				}}>
 				<Flex position={"absolute"} top={2} right={2}>
-					<Badge variant={"solid"} zIndex={1}>
-						{item?.media_type === "movie" ? "Movie" : "TV"}
-					</Badge>
+					<CustomCardBadge type={type} />
 				</Flex>
 				<Image
 					src={`${imagePath}${item?.poster_path} || ${imagePath}${item?.profile_path}`}

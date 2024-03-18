@@ -1,5 +1,4 @@
 import {
-	Badge,
 	Box,
 	Flex,
 	Heading,
@@ -13,6 +12,7 @@ import { imagePath } from "../services/api";
 import { useFirestore } from "../services/firestore";
 import { useAuth } from "../context/useAuth";
 import { CheckIcon, StarIcon } from "@chakra-ui/icons";
+import CustomCardBadge from "./CustomCardBadge";
 
 const WatchlistCard = ({ type, item, setWatchlist }) => {
 	const { removeFromWatchlist } = useFirestore();
@@ -32,9 +32,7 @@ const WatchlistCard = ({ type, item, setWatchlist }) => {
 				{/* Poster image w/ remove button */}
 				<Box position={"relative"} w={"150px"}>
 					<Flex position={"absolute"} top={2} right={2}>
-						<Badge variant={"solid"} zIndex={1}>
-							{type === "movie" ? "Movie" : "TV"}
-						</Badge>
+						<CustomCardBadge type={type} />
 					</Flex>
 					<Image
 						src={`${imagePath}/${item.poster_path}`}

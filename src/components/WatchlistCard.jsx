@@ -1,4 +1,5 @@
 import {
+	Badge,
 	Box,
 	Flex,
 	Heading,
@@ -30,6 +31,11 @@ const WatchlistCard = ({ type, item, setWatchlist }) => {
 			<Flex gap="4">
 				{/* Poster image w/ remove button */}
 				<Box position={"relative"} w={"150px"}>
+					<Flex position={"absolute"} top={2} right={2}>
+						<Badge variant={"solid"} zIndex={1}>
+							{type === "movie" ? "Movie" : "TV"}
+						</Badge>
+					</Flex>
 					<Image
 						src={`${imagePath}/${item.poster_path}`}
 						alt={item.title}

@@ -228,7 +228,7 @@ const PeopleDetails = () => {
 								maxW={"150px"}
 								minW={"150px"}>
 								<Flex position={"absolute"} top={2} right={2}>
-									<Badge colorScheme="whiteAlpha" variant={"solid"} zIndex={1}>
+									<Badge variant={"solid"} zIndex={1}>
 										{item?.media_type === "movie" ? "Movie" : "TV"}
 									</Badge>
 								</Flex>
@@ -291,7 +291,7 @@ const PeopleDetails = () => {
 								maxW={"150px"}
 								minW={"150px"}>
 								<Flex position={"absolute"} top={2} right={2}>
-									<Badge colorScheme="whiteAlpha" variant={"solid"} zIndex={1}>
+									<Badge variant={"solid"} zIndex={1}>
 										{item?.media_type === "movie" ? "Movie" : "TV"}
 									</Badge>
 								</Flex>

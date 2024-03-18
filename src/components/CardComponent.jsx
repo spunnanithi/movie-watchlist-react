@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Badge, Box, Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { imagePath } from "../services/api";
 import { StarIcon } from "@chakra-ui/icons";
@@ -17,6 +17,11 @@ const CardComponent = ({ item, type }) => {
 						opacity: 1,
 					},
 				}}>
+				<Flex position={"absolute"} top={2} right={2}>
+					<Badge variant={"solid"} zIndex={1}>
+						{item?.media_type === "movie" ? "Movie" : "TV"}
+					</Badge>
+				</Flex>
 				<Image
 					src={`${imagePath}${item?.poster_path} || ${imagePath}${item?.profile_path}`}
 					// Replace with placeholder image if src cannot be found
@@ -49,10 +54,7 @@ const CardComponent = ({ item, type }) => {
 					<Text fontSize={"medium"} textAlign={"center"}>
 						{item?.title || item?.name}
 					</Text>
-					<Text textAlign={"center"} fontSize={"small"} color={"gray.400"}>
-						{item?.media_type === "movie" ? "Movie" : "TV Show"}
-					</Text>
-					<Text textAlign={"center"} fontSize={"x-small"} color={"teal.300"}>
+					<Text textAlign={"center"} fontSize={"small"} color={"teal.300"}>
 						{new Date(
 							item?.release_date || item?.first_air_date
 						).getFullYear() || "No Date Found"}

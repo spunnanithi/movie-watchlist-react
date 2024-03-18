@@ -421,7 +421,16 @@ const Details = () => {
 					)}
 					{recommendations &&
 						recommendations?.map((item) => (
-							<Box key={item?.id} maxW={"150px"} minW={"150px"}>
+							<Box
+								position={"relative"}
+								key={item?.id}
+								maxW={"150px"}
+								minW={"150px"}>
+								<Flex position={"absolute"} top={2} right={2}>
+									<Badge colorScheme="whiteAlpha" variant={"solid"} zIndex={1}>
+										{type === "movie" ? "Movie" : "TV"}
+									</Badge>
+								</Flex>
 								<Link to={`/${item?.media_type}/${item?.id}`}>
 									<Image
 										transform={"scale(1)"}
@@ -445,9 +454,6 @@ const Details = () => {
 									/>
 								</Link>
 								<Text>{item?.title || item?.name}</Text>
-								<Text fontSize={"small"} color={"gray.400"}>
-									{type === "movie" ? "Movie" : "TV Show"}
-								</Text>
 								<Text fontSize={"small"} color={"teal.300"}>
 									{new Date(
 										item?.release_date || item?.first_air_date

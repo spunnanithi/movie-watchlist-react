@@ -66,7 +66,7 @@ const PeopleDetails = () => {
 
 	useEffect(() => {
 		fetchPeopleSearch(name)
-			.then((res) => setKnownFor(res?.results[0].known_for))
+			.then((res) => setKnownFor(res?.results[0]?.known_for))
 			.catch((err) => {
 				console.log(err);
 			});
@@ -83,7 +83,7 @@ const PeopleDetails = () => {
 	// console.log(peopleDetails);
 	// console.log(images);
 	// console.log(castCombinedCredits);
-	console.log(knownFor);
+	// console.log(knownFor);
 
 	return (
 		<Box pt={5}>
@@ -221,8 +221,17 @@ const PeopleDetails = () => {
 				<Flex mt={5} mb={10} px={2} pt={3} overflowX={"scroll"} gap={5}>
 					{knownFor?.length === 0 && <Text>No known for credits found</Text>}
 					{knownFor &&
-						knownFor.map((item) => (
-							<Box key={item?.id} maxW={"150px"} minW={"150px"}>
+						knownFor?.map((item) => (
+							<Box
+								position={"relative"}
+								key={item?.id}
+								maxW={"150px"}
+								minW={"150px"}>
+								<Flex position={"absolute"} top={2} right={2}>
+									<Badge colorScheme="whiteAlpha" variant={"solid"} zIndex={1}>
+										{item?.media_type === "movie" ? "Movie" : "TV"}
+									</Badge>
+								</Flex>
 								<Link to={`/${item?.media_type}/${item?.id}`}>
 									<Image
 										transform={"scale(1)"}
@@ -250,9 +259,6 @@ const PeopleDetails = () => {
 										item?.release_date || item?.first_air_date
 									).getFullYear() || "N/A"}
 								</Text>
-								<Text fontSize={"small"} color={"gray.400"}>
-									{item?.character}
-								</Text>
 								<Flex alignItems={"center"} gap={1} mt={1}>
 									<StarIcon fontSize={"medium"} />
 									<Text fontSize={"medium"}>
@@ -279,7 +285,16 @@ const PeopleDetails = () => {
 					{castCombinedCredits?.length === 0 && <Text>No credits found</Text>}
 					{castCombinedCredits &&
 						castCombinedCredits.map((item) => (
-							<Box key={item?.credit_id} maxW={"150px"} minW={"150px"}>
+							<Box
+								position={"relative"}
+								key={item?.credit_id}
+								maxW={"150px"}
+								minW={"150px"}>
+								<Flex position={"absolute"} top={2} right={2}>
+									<Badge colorScheme="whiteAlpha" variant={"solid"} zIndex={1}>
+										{item?.media_type === "movie" ? "Movie" : "TV"}
+									</Badge>
+								</Flex>
 								<Link to={`/${item?.media_type}/${item?.id}`}>
 									<Image
 										transform={"scale(1)"}

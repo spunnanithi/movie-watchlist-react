@@ -324,7 +324,6 @@ const Details = () => {
 				</Container>
 			</Box>
 
-			{/* Cast */}
 			<Container
 				maxW={{
 					base: "container.sm",
@@ -333,28 +332,37 @@ const Details = () => {
 					xl: "container.xl",
 				}}
 				pb={10}>
+				{/* Cast */}
 				<Box mt={10}>
 					<CustomHeading>Cast</CustomHeading>
 					<Divider mt={2} />
 				</Box>
-				<Flex mt={5} mb={10} overflowX={"scroll"} gap={5}>
+				<Flex mt={5} mb={10} px={2} pt={3} overflowX={"scroll"} gap={5}>
 					{cast?.length === 0 && <Text>No cast found</Text>}
 					{cast &&
 						cast.map((item) => (
 							<Box key={item?.id} maxW={"150px"} minW={"150px"}>
-								<Image
-									src={`${imagePath}${item?.profile_path}`}
-									// Replace with placeholder image if src cannot be found
-									onError={(e) => {
-										e.currentTarget.src =
-											"https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg";
-										e.currentTarget.onerror = null;
-									}}
-									w={"100%"}
-									h={"225px"}
-									objectFit={"cover"}
-									borderRadius={"md"}
-								/>
+								<Link to={`/people/${item?.id}`}>
+									<Image
+										transform={"scale(1)"}
+										_hover={{
+											transform: { base: "scale(1)", md: "scale(1.08)" },
+											transition: "transform 0.2s ease-in-out",
+											zIndex: 10,
+										}}
+										src={`${imagePath}${item?.profile_path}`}
+										// Replace with placeholder image if src cannot be found
+										onError={(e) => {
+											e.currentTarget.src =
+												"https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg";
+											e.currentTarget.onerror = null;
+										}}
+										w={"100%"}
+										h={"225px"}
+										objectFit={"cover"}
+										borderRadius={"md"}
+									/>
+								</Link>
 								<Text>{item?.name}</Text>
 								<Text fontSize={"small"} color={"gray.400"}>
 									{item?.character}

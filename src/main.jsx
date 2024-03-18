@@ -10,6 +10,7 @@ import Movies from "./pages/movies/Movies.jsx";
 import Shows from "./pages/shows/Shows.jsx";
 import Search from "./pages/search/Search.jsx";
 import Details from "./pages/Details.jsx";
+import PeopleDetails from "./pages/PeopleDetails.jsx";
 import { AuthProvider } from "./context/authProvider.jsx";
 import Watchlist from "./pages/Watchlist.jsx";
 import ProtectedRoutes from "./components/routes/ProtectedRoutes.jsx";
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
 			{
 				path: "/:type/:id",
 				element: <Details />,
+			},
+			{
+				path: "/people/:id",
+				element: <PeopleDetails />,
 			},
 			{
 				path: "/watchlist",

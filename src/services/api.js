@@ -95,3 +95,37 @@ export const fetchSearchData = async (query, page) => {
 
 	return res?.data;
 };
+
+// PEOPLE - Details
+export const fetchPeopleDetails = async (id) => {
+	const res = await axios.get(`${baseUrl}/person/${id}?api_key=${apiKey}`);
+
+	return res?.data;
+};
+
+// PEOPLE - Images
+export const fetchPeopleImages = async (id) => {
+	const res = await axios.get(
+		`${baseUrl}/person/${id}/images?api_key=${apiKey}`
+	);
+
+	return res?.data;
+};
+
+// PEOPLE - Combined Credits
+export const fetchPeopleCombinedCredits = async (id) => {
+	const res = await axios.get(
+		`${baseUrl}/person/${id}/combined_credits?api_key=${apiKey}`
+	);
+
+	return res?.data;
+};
+
+// PEOPLE - Search
+export const fetchPeopleSearch = async (name) => {
+	const res = await axios.get(
+		`${baseUrl}/search/person?api_key=${apiKey}&query=${name}`
+	);
+
+	return res?.data;
+};

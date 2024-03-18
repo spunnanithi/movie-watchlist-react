@@ -342,7 +342,7 @@ const Details = () => {
 					{cast &&
 						cast.map((item) => (
 							<Box key={item?.id} maxW={"150px"} minW={"150px"}>
-								<Link to={`/people/${item?.id}`}>
+								<Link to={`/person/${item?.id}`}>
 									<Image
 										transform={"scale(1)"}
 										_hover={{

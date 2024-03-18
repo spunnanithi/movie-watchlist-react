@@ -18,7 +18,7 @@ const CardComponent = ({ item, type }) => {
 					},
 				}}>
 				<Image
-					src={`${imagePath}${item?.poster_path}`}
+					src={`${imagePath}${item?.poster_path} || ${imagePath}${item?.profile_path}`}
 					// Replace with placeholder image if src cannot be found
 					onError={(e) => {
 						e.currentTarget.src =

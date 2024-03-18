@@ -86,7 +86,7 @@ const PeopleDetails = () => {
 	console.log(knownFor);
 
 	return (
-		<Box>
+		<Box pt={5}>
 			{/* Background Image */}
 			<Box
 				background={`linear-gradient(rgba(0,0,0,0.88), rgba(0,0,0,0.88))`}
@@ -158,7 +158,7 @@ const PeopleDetails = () => {
 							<Heading fontSize={"xl"} mb={3}>
 								Biography
 							</Heading>
-							<Text fontSize={"md"} mb={3}>
+							<Text fontSize={"sm"} mb={3}>
 								{peopleDetails?.biography}
 							</Text>
 							<Flex mt={6} gap={2}>

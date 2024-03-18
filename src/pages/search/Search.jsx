@@ -81,7 +81,13 @@ const Search = () => {
 
 					{tempSearchValue && (
 						<InputRightElement>
-							<CloseButton onClick={() => setTempSearchValue("")} />
+							<CloseButton
+								onClick={() => {
+									setTempSearchValue("");
+									setData([]);
+									setIsFetched(false);
+								}}
+							/>
 						</InputRightElement>
 					)}
 				</InputGroup>

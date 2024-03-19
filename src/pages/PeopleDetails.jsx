@@ -22,6 +22,7 @@ import { CalendarIcon, StarIcon } from "@chakra-ui/icons";
 import { calculateAge } from "../utils/helpers";
 import CustomHeading from "../components/CustomHeading";
 import CustomCardBadge from "../components/CustomCardBadge";
+import useTitle from "../hooks/useTitle";
 
 const PeopleDetails = () => {
 	const { id } = useParams();
@@ -72,6 +73,9 @@ const PeopleDetails = () => {
 				console.log(err);
 			});
 	}, [name]);
+
+	// Set the document title of page
+	useTitle(name || "Person Details");
 
 	if (loading) {
 		return (

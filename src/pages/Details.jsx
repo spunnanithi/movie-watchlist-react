@@ -42,6 +42,7 @@ import { useAuth } from "../context/useAuth";
 import { useFirestore } from "../services/firestore";
 import CustomHeading from "../components/CustomHeading";
 import CustomCardBadge from "../components/CustomCardBadge";
+import useTitle from "../hooks/useTitle";
 
 const Details = () => {
 	const { type, id } = useParams();
@@ -143,6 +144,9 @@ const Details = () => {
 	// console.log("videos", videos);
 	// console.log(recommendations);
 
+	const title = details?.name || details?.title;
+	const releaseDate = details?.first_air_date || details?.release_date;
+
 	// Upon mount, check to see if current item is already in db
 	useEffect(() => {
 		if (!user) {
@@ -155,6 +159,15 @@ const Details = () => {
 		});
 	}, [user, id, checkIfInWatchlist]);
 
+	// Set the document title of page
+	useTitle(
+		`${details?.name || details?.title || "Media Details"} | ${
+			new Date(
+				details?.first_air_date || details?.release_date
+			).getFullYear() || "Year"
+		}`
+	);
+
 	if (loading) {
 		return (
 			<Flex height={"100vh"} justifyContent={"center"} alignContent={"center"}>
@@ -162,9 +175,6 @@ const Details = () => {
 			</Flex>
 		);
 	}
-
-	const title = details?.name || details?.title;
-	const releaseDate = details?.first_air_date || details?.release_date;
 
 	return (
 		<Box>

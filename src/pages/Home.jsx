@@ -3,6 +3,7 @@ import { Box, Container, Flex, Grid, Select, Skeleton } from "@chakra-ui/react";
 import { fetchAllTrending } from "../services/api";
 import CardComponent from "../components/CardComponent";
 import CustomHeading from "../components/CustomHeading";
+import useTitle from "../hooks/useTitle";
 
 const Home = () => {
 	const [data, setData] = useState([]);
@@ -25,6 +26,9 @@ const Home = () => {
 	}, [timeWindow, mediaType]);
 
 	// console.log("data", data);
+
+	// Set the document title of page
+	useTitle("Home");
 
 	return (
 		<Container

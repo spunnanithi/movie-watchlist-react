@@ -8,8 +8,12 @@ import {
 import PaginationComponent from "../../components/PaginationComponent";
 import GridComponent from "../../components/GridComponent";
 import CustomHeading from "../../components/CustomHeading";
+import useTitle from "../../hooks/useTitle";
 
 const Shows = () => {
+	// Set the document title of page
+	useTitle("Discover TV Shows");
+
 	const [shows, setShows] = useState([]);
 	const [genres, setGenres] = useState([]);
 	const [activePage, setActivePage] = useState(1);
@@ -48,6 +52,9 @@ const Shows = () => {
 	}, [activePage, sortBy, genreQuery]);
 
 	// console.log(shows);
+
+	// Set the document title of page
+	useTitle("Discover TV Shows");
 
 	return (
 		<Container

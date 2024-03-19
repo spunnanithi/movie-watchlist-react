@@ -17,6 +17,7 @@ import { fetchSearchData } from "../../services/api";
 import CardComponent from "../../components/CardComponent";
 import PaginationComponent from "../../components/PaginationComponent";
 import CustomHeading from "../../components/CustomHeading";
+import useTitle from "../../hooks/useTitle";
 
 const Search = () => {
 	const [searchValue, setSearchValue] = useState("");
@@ -50,6 +51,9 @@ const Search = () => {
 	};
 
 	// console.log(data);
+
+	// Set the document title of page
+	useTitle("Search");
 
 	return (
 		<Container

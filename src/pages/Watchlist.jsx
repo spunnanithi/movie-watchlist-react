@@ -4,6 +4,7 @@ import { useAuth } from "../context/useAuth";
 import { Container, Flex, Grid, Spinner } from "@chakra-ui/react";
 import WatchlistCard from "../components/WatchlistCard";
 import CustomHeading from "../components/CustomHeading";
+import useTitle from "../hooks/useTitle";
 
 const Watchlist = () => {
 	const { getWatchlist } = useFirestore();
@@ -22,6 +23,9 @@ const Watchlist = () => {
 				.finally(() => setLoading(false));
 		}
 	}, [user?.uid, getWatchlist]);
+
+	// Set the document title of page
+	useTitle("My Watchlist");
 
 	return (
 		<Container

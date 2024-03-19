@@ -8,6 +8,7 @@ import {
 import PaginationComponent from "../../components/PaginationComponent";
 import GridComponent from "../../components/GridComponent";
 import CustomHeading from "../../components/CustomHeading";
+import useTitle from "../../hooks/useTitle";
 
 const Movies = () => {
 	const [movies, setMovies] = useState([]);
@@ -50,6 +51,9 @@ const Movies = () => {
 	// console.log(movies);
 	// console.log(genres);
 	// console.log(genreQuery);
+
+	// Set the document title of page
+	useTitle("Discover Movies");
 
 	return (
 		<Container

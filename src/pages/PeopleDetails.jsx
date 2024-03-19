@@ -23,6 +23,8 @@ import { calculateAge } from "../utils/helpers";
 import CustomHeading from "../components/CustomHeading";
 import CustomCardBadge from "../components/CustomCardBadge";
 import useTitle from "../hooks/useTitle";
+import avatarFallbackImg from "../assets/avatar-placeholder-img.jpeg";
+import posterFallbackImg from "../assets/poster-placeholder.jpg";
 
 const PeopleDetails = () => {
 	const { id } = useParams();
@@ -120,8 +122,12 @@ const PeopleDetails = () => {
 						{/* Movie Poster Image */}
 						<Image
 							height={"450px"}
+							width={"300px"}
+							objectFit={"cover"}
 							borderRadius={"md"}
 							src={`${imagePath}${peopleDetails?.profile_path}`}
+							fallbackSrc={avatarFallbackImg}
+							alt={`${peopleDetails?.name} picture`}
 						/>
 
 						<Box>
@@ -210,12 +216,13 @@ const PeopleDetails = () => {
 							<Box key={index} maxW={"150px"} minW={"150px"}>
 								<Image
 									src={`${imagePath}${item?.file_path}`}
+									alt={`${peopleDetails?.name} image`}
 									// Replace with placeholder image if src cannot be found
 									onError={(e) => {
-										e.currentTarget.src =
-											"https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg";
+										e.currentTarget.src = avatarFallbackImg;
 										e.currentTarget.onerror = null;
 									}}
+									loading="lazy"
 									w={"100%"}
 									h={"225px"}
 									objectFit={"cover"}
@@ -251,14 +258,16 @@ const PeopleDetails = () => {
 											zIndex: 10,
 										}}
 										src={`${imagePath}${item?.poster_path}`}
+										alt={`${peopleDetails?.name} known for movie`}
 										// Replace with placeholder image if src cannot be found
 										onError={(e) => {
-											e.currentTarget.src =
-												"https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg";
+											e.currentTarget.src = posterFallbackImg;
 											e.currentTarget.onerror = null;
 										}}
+										loading="lazy"
 										w={"100%"}
 										h={"225px"}
+										mb={2}
 										objectFit={"cover"}
 										borderRadius={"md"}
 									/>
@@ -312,14 +321,16 @@ const PeopleDetails = () => {
 											zIndex: 10,
 										}}
 										src={`${imagePath}${item?.poster_path}`}
+										alt={`${peopleDetails?.name} filmography`}
 										// Replace with placeholder image if src cannot be found
 										onError={(e) => {
-											e.currentTarget.src =
-												"https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg";
+											e.currentTarget.src = posterFallbackImg;
 											e.currentTarget.onerror = null;
 										}}
 										w={"100%"}
 										h={"225px"}
+										loading="lazy"
+										mb={2}
 										objectFit={"cover"}
 										borderRadius={"md"}
 									/>

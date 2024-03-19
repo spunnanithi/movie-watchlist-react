@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { imagePath } from "../services/api";
 import { StarIcon } from "@chakra-ui/icons";
 import CustomCardBadge from "./CustomCardBadge";
+import posterFallbackImg from "../assets/poster-placeholder.jpg";
 
 const CardComponent = ({ item, type }) => {
 	return (
@@ -24,13 +25,9 @@ const CardComponent = ({ item, type }) => {
 				<Image
 					src={`${imagePath}${item?.poster_path} || ${imagePath}${item?.profile_path}`}
 					// Replace with placeholder image if src cannot be found
-					onError={(e) => {
-						e.currentTarget.src =
-							"https://i0.wp.com/capri.org.au/wp-content/uploads/2017/10/poster-placeholder.jpg?ssl=1";
-						e.currentTarget.onerror = null;
-					}}
+					fallbackSrc={posterFallbackImg}
 					alt={item?.title || item?.name}
-					height={"100%"}
+					height={"350px"}
 					borderRadius={"md"}
 				/>
 

@@ -43,6 +43,8 @@ import { useFirestore } from "../services/firestore";
 import CustomHeading from "../components/CustomHeading";
 import CustomCardBadge from "../components/CustomCardBadge";
 import useTitle from "../hooks/useTitle";
+import posterFallbackImg from "../assets/poster-placeholder.jpg";
+import avatarFallbackImg from "../assets/avatar-placeholder-img.jpeg";
 
 const Details = () => {
 	const { type, id } = useParams();
@@ -206,8 +208,12 @@ const Details = () => {
 						{/* Movie Poster Image */}
 						<Image
 							height={"450px"}
+							width={"300px"}
+							objectFit={"cover"}
 							borderRadius={"md"}
 							src={`${imagePath}${details?.poster_path}`}
+							fallbackSrc={posterFallbackImg}
+							alt={`${title} poster image`}
 						/>
 
 						<Box>
@@ -369,14 +375,16 @@ const Details = () => {
 											zIndex: 10,
 										}}
 										src={`${imagePath}${item?.profile_path}`}
+										alt={`${item?.name} image`}
 										// Replace with placeholder image if src cannot be found
 										onError={(e) => {
-											e.currentTarget.src =
-												"https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg";
+											e.currentTarget.src = avatarFallbackImg;
 											e.currentTarget.onerror = null;
 										}}
 										w={"100%"}
 										h={"225px"}
+										loading="lazy"
+										mb={2}
 										objectFit={"cover"}
 										borderRadius={"md"}
 									/>
@@ -456,15 +464,16 @@ const Details = () => {
 											zIndex: 10,
 										}}
 										src={`${imagePath}${item?.poster_path}`}
+										alt={`${item?.item || item?.name} poster image`}
 										// Replace with placeholder image if src cannot be found
 										onError={(e) => {
-											e.currentTarget.src =
-												"https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg";
+											e.currentTarget.src = posterFallbackImg;
 											e.currentTarget.onerror = null;
 										}}
+										loading="lazy"
 										w={"100%"}
 										h={"225px"}
-										mb={3}
+										mb={2}
 										objectFit={"cover"}
 										borderRadius={"md"}
 									/>

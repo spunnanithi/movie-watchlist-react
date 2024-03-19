@@ -5,6 +5,7 @@ const VideoComponent = ({ id, small, title }) => {
 			height={small ? "250" : "500"}
 			src={`https://www.youtube.com/embed/${id}`}
 			title={title}
+			loading="lazy"
 			allowFullScreen></iframe>
 	);
 };

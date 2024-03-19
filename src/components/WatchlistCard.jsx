@@ -13,6 +13,7 @@ import { useFirestore } from "../services/firestore";
 import { useAuth } from "../context/useAuth";
 import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 import CustomCardBadge from "./CustomCardBadge";
+import posterFallbackImg from "../assets/poster-placeholder.jpg";
 
 const WatchlistCard = ({ type, item, setWatchlist }) => {
 	const { removeFromWatchlist } = useFirestore();
@@ -36,9 +37,15 @@ const WatchlistCard = ({ type, item, setWatchlist }) => {
 					</Flex>
 					<Image
 						src={`${imagePath}/${item.poster_path}`}
+						// Replace with placeholder image if src cannot be found
+						onError={(e) => {
+							e.currentTarget.src = posterFallbackImg;
+							e.currentTarget.onerror = null;
+						}}
 						alt={item.title}
 						height={"200px"}
 						minW={"150px"}
+						loading="lazy"
 						objectFit={"cover"}
 					/>
 					<Tooltip label="Remove from watchlist">
@@ -67,8 +74,8 @@ const WatchlistCard = ({ type, item, setWatchlist }) => {
 						).getFullYear() || "N/A"}
 					</Heading>
 					<Flex alignItems={"center"} gap={2} mt="4">
-						<StarIcon fontSize={"small"} />
-						<Text textAlign={"center"} fontSize="small">
+						<StarIcon fontSize={"medium"} />
+						<Text textAlign={"center"} fontSize="medium">
 							{item?.vote_average?.toFixed(1)}
 						</Text>
 					</Flex>
